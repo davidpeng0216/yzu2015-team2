@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace team2
 {
-    class OnlineForum
+    class Register
     {
+
     }
 }
