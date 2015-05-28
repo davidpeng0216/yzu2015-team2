@@ -24,6 +24,13 @@ namespace team2
             else return false;
         }
 
+        static internal bool VerifyPasswordSame(string password, string confirmPassword)
+        {
+            if (password.Equals(confirmPassword))
+                return true;
+            else return false;
+        }
+
         static internal bool CheckAcountExist(string accountToCheck)
         {
             bool accountExist = false;

@@ -31,6 +31,7 @@ namespace team2
             Assert.IsFalse(OnlineForum.VerifyAccount("123abc"));
             //包含英文和數字以外的字元
             Assert.IsFalse(OnlineForum.VerifyAccount("123我是中文"));
+
             //正常Case
             Assert.IsTrue(OnlineForum.VerifyPassword("123456789"));
             Assert.IsTrue(OnlineForum.VerifyPassword("abc12345"));
@@ -43,7 +44,11 @@ namespace team2
             Assert.IsFalse(OnlineForum.VerifyPassword("123abc"));
             //包含英文和數字以外的字元
             Assert.IsFalse(OnlineForum.VerifyPassword("123我是中文"));
-            
+
+            //正常Case
+            Assert.IsTrue(OnlineForum.VerifyPasswordSame("123456789", "123456789"));
+            //不相同
+            Assert.IsFalse(OnlineForum.VerifyPasswordSame("123456789", "123456987"));
         }
     }
 }
