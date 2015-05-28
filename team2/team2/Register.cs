@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
-    class  OnlineForum
+    class OnlineForum
     {
         static internal bool VerifyAccount(string account)
         {
@@ -22,5 +22,10 @@ namespace team2
                 return true;
             else return false;
         }
+    }
+    
+    class Register
+    {
+
     }
 }
