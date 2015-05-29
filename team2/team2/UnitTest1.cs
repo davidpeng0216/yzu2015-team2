@@ -82,8 +82,9 @@ namespace team2
          public void Test_Login()
          {
              //正常case
-             Login user;
-             Assert.Equals(1, 1);
+            
+           
+             Assert.AreEqual(true, Login.login("test1"));
            
          }
 

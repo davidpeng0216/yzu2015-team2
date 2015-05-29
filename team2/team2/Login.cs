@@ -14,8 +14,8 @@ namespace team2
    
     class Login : Account
     {
-        private bool login_status ;
-        private static int try_count ;
+        static bool login_status ;
+        static  int try_count ;
 
         public Login()
         {
@@ -34,7 +34,7 @@ namespace team2
             return try_count;
         }
 
-        public bool login(string accountToCheck)
+        static internal bool login(string accountToCheck)
         {
             bool accountExist = false;
 
