@@ -31,6 +31,14 @@ namespace team2
             else return false;
         }
 
+        static internal bool VerifyEmail(string email)
+        {
+            if (Regex.IsMatch(email, "^[a-zA-Z0-9_]+@[a-zA-Z0-9._]+$"))
+                return true;
+            else 
+                return false;
+        }
+
         static internal bool CheckAcountExist(string accountToCheck)
         {
             bool accountExist = false;

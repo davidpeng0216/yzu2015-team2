@@ -50,5 +50,32 @@ namespace team2
             //不相同
             Assert.IsFalse(OnlineForum.VerifyPasswordSame("123456789", "123456987"));
         }
+
+         [TestMethod]
+        public void Test_Email()
+        {
+            //正常case
+            Assert.IsTrue(OnlineForum.VerifyEmail("test1@gmail.com"));
+            Assert.IsTrue(OnlineForum.VerifyEmail("test_1@gmail.com"));
+            Assert.IsTrue(OnlineForum.VerifyEmail("1test@gmail.com"));
+            Assert.IsTrue(OnlineForum.VerifyEmail("test1@mail.yzu.edu.tw"));
+            Assert.IsTrue(OnlineForum.VerifyEmail("test_1@mail.yzu.edu.tw"));
+            Assert.IsTrue(OnlineForum.VerifyEmail("test1@web_mail.com"));
+            Assert.IsTrue(OnlineForum.VerifyEmail("test_1@web_mail.com"));
+            Assert.IsTrue(OnlineForum.VerifyEmail("9fbw2313test_1565@yahoo.com.tw"));
+
+            //包含 英文,數字,_ 以外的字元
+            Assert.IsFalse(OnlineForum.VerifyEmail("電子信箱@mail.yzu.edu.tw"));
+            Assert.IsFalse(OnlineForum.VerifyEmail("test1@電子信箱伺服器.com"));
+            Assert.IsFalse(OnlineForum.VerifyEmail("test_1@web_mail.com.台灣"));
+            Assert.IsFalse(OnlineForum.VerifyEmail("tes#$#$t_1@web_mail.com.tw"));
+
+            //不是電子信箱格式
+            Assert.IsFalse(OnlineForum.VerifyEmail("test_1^web_mail.com"));
+            Assert.IsFalse(OnlineForum.VerifyEmail("test_1小老鼠web_mail.com"));
+            Assert.IsFalse(OnlineForum.VerifyEmail("test_1$web_mail.com"));
+            Assert.IsFalse(OnlineForum.VerifyEmail("test123@@@@web_mail.com"));
+            Assert.IsFalse(OnlineForum.VerifyEmail("test123@happy@web_mail.com"));
+        }
     }
 }
