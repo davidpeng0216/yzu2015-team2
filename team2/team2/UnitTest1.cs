@@ -98,12 +98,27 @@ namespace team2
          public void Test_Login()
          {
              //正常case
-            
+             Assert.AreEqual(true, Login.login("test1","1234"));
+             Assert.AreEqual(true, Login.login("test2","1234"));
+             Assert.AreEqual(true, Login.login("test3", "1234"));
            
-             Assert.AreEqual(true, Login.login("test1"));
-           
+             //錯誤的case
+             //id 對 密碼錯
+             Assert.AreEqual(false, Login.login("test","asdasd"));
+             //空
+             Assert.AreEqual(false, Login.login("",""));
+             //"all wrong
+
+             Assert.AreEqual(false, Login.login("asd3","asda"));
+             Assert.AreEqual(false, Login.login("asdasd","ee"));
+             Assert.AreEqual(false, Login.login("","333"));
+             Assert.AreEqual(false, Login.login("asd3","1234"));
+
+             //嘗試了超過5次所以失敗
+             Assert.AreEqual(false, Login.login("test3","1234"));
          }
 
+       
 
 
     }

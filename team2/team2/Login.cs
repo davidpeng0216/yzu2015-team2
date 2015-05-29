@@ -34,20 +34,28 @@ namespace team2
             return try_count;
         }
 
-        static internal bool login(string accountToCheck)
+        static internal bool login(string userid, string password)
         {
+            if (try_count > 5)
+            {
+                return false;
+            }
+            
             bool accountExist = false;
 
             char[] delimiters = new char[] { '\t', ' ' };
-            StreamReader sr = new StreamReader("punch_in.txt");
+            StreamReader sr = new StreamReader("account.txt");
             while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
             {
                 string line = sr.ReadLine();    // 讀取文字到 line 變數
                 string[] item = line.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-                if (item[0].Equals(accountToCheck))
+                if (item[0].Equals(userid))
                 {
-                    accountExist = true;
-                    break;
+                    if (item[1].Equals(password))
+                    {
+                        accountExist = true;
+                        break;
+                    }
                 }
             }
             sr.Close();
