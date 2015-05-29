@@ -12,6 +12,7 @@ namespace team2
         private string password;
         private string Email;
 
+        public Account();
         public Account(string _account, string _password, string _Email)
         {
             this.setAcount(_account).setPassword(_password).setEmail(_Email);

@@ -77,5 +77,17 @@ namespace team2
             Assert.IsFalse(OnlineForum.VerifyEmail("test123@@@@web_mail.com"));
             Assert.IsFalse(OnlineForum.VerifyEmail("test123@happy@web_mail.com"));
         }
+
+         [TestMethod]
+         public void Test_Login()
+         {
+             //正常case
+             Login user;
+             Assert.Equals(1, 1);
+           
+         }
+
+
+
     }
 }
