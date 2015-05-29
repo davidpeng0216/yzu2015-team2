@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
-    class OnlineForum
+    class Register
     {
         static internal bool VerifyAccount(string account)
         {
@@ -57,6 +57,26 @@ namespace team2
             }
             sr.Close();
             return accountExist;
+        }
+
+        static internal bool CheckEmailExist(string EmailToCheck)
+        {
+            bool EmailExist = false;
+
+            char[] delimiters = new char[] { '\t', ' ' };
+            StreamReader sr = new StreamReader("account.txt");
+            while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
+            {
+                string line = sr.ReadLine();    // 讀取文字到 line 變數
+                string[] item = line.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                if (item[2].Equals(EmailToCheck))
+                {
+                    EmailExist = true;
+                    break;
+                }
+            }
+            sr.Close();
+            return EmailExist;
         }
 
     }
