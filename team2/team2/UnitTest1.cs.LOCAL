@@ -7,7 +7,7 @@ namespace team2
     public class RegisterTestClass
     {
         [TestMethod]
-        public void testAccountExist()
+        public void testkAccountExist()
         {
             Assert.IsTrue(Register.CheckAcountExist("testtest1"));
             Assert.IsTrue(Register.CheckAcountExist("testtest2"));
@@ -16,8 +16,6 @@ namespace team2
             Assert.IsFalse(Register.CheckAcountExist("testtest"));
             Assert.IsFalse(Register.CheckAcountExist("DDDDDDDDD"));
 
-            Assert.IsFalse(Register.CheckAcountExist("Test1"));
-            Assert.IsFalse(Register.CheckAcountExist("test1@gmail.com"));
         }
 
         [TestMethod]
@@ -39,18 +37,14 @@ namespace team2
 
             //正常Case
             Assert.IsTrue(Register.VerifyAccount("abcde123"));
-            Assert.IsTrue(Register.VerifyAccount("abcdeFGH"));
             //過長
             Assert.IsFalse(Register.VerifyAccount("abcdefghASijk123dkfasfdjasjdkaslkdasld456789"));
             //過短
             Assert.IsFalse(Register.VerifyAccount("abc123"));
-            Assert.IsFalse(Register.VerifyAccount(""));
             //非英文開頭
-            Assert.IsFalse(Register.VerifyAccount("123abcdefg"));
+            Assert.IsFalse(Register.VerifyAccount("123abc"));
             //包含英文和數字以外的字元
             Assert.IsFalse(Register.VerifyAccount("123我是中文"));
-            Assert.IsFalse(Register.VerifyAccount("敏捷軟體開發課程"));
-            Assert.IsFalse(Register.VerifyAccount("            "));
         }
 
         [TestMethod]
@@ -58,8 +52,7 @@ namespace team2
         {
             //test password's format
 
-
-            //正常密碼Case
+            //正常Case
             Assert.IsTrue(Register.VerifyPassword("123456789"));
             Assert.IsTrue(Register.VerifyPassword("abc12345"));
             Assert.IsTrue(Register.VerifyPassword("125abcde"));
@@ -69,11 +62,6 @@ namespace team2
             Assert.IsFalse(Register.VerifyPassword("abc1234"));
             Assert.IsFalse(Register.VerifyPassword("123abc"));
             Assert.IsFalse(Register.VerifyPassword(""));
-            Assert.IsFalse(Register.VerifyPassword("abc123"));
-            //包含英文和數字以外的字元
-            Assert.IsFalse(Register.VerifyPassword("123我是中文"));
-            Assert.IsFalse(Register.VerifyPassword("!@#$%^&&*"));
-            Assert.IsFalse(Register.VerifyPassword("            "));
         }
 
         [TestMethod]
