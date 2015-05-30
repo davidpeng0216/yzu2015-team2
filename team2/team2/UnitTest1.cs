@@ -16,6 +16,8 @@ namespace team2
             Assert.IsFalse(Register.CheckAcountExist("test"));
             Assert.IsFalse(Register.CheckAcountExist("DDD"));
 
+            Assert.IsFalse(Register.CheckAcountExist("Test1"));
+            Assert.IsFalse(Register.CheckAcountExist("test1@gmail.com"));
         }
 
         [TestMethod]
@@ -31,7 +33,7 @@ namespace team2
         }
 
         [TestMethod]
-        public void Test_1003314()
+        public void Test_帳號密碼()//1003314
         {
             //test account's and password's format
 
@@ -41,12 +43,14 @@ namespace team2
             Assert.IsFalse(Register.VerifyAccount("abcdefghASijk123dkfasfdjasjdkaslkdasld456789"));
             //過短
             Assert.IsFalse(Register.VerifyAccount("abc123"));
+            Assert.IsFalse(Register.VerifyAccount(""));
             //非英文開頭
-            Assert.IsFalse(Register.VerifyAccount("123abc"));
+            Assert.IsFalse(Register.VerifyAccount("123abcdefg"));
             //包含英文和數字以外的字元
-            Assert.IsFalse(Register.VerifyAccount("123我是中文"));
+            Assert.IsFalse(Register.VerifyAccount("ad   &&&^^%%$%"));
+            Assert.IsFalse(Register.VerifyAccount("敏捷軟體開發課程"));
 
-            //正常Case
+            //正常密碼Case
             Assert.IsTrue(Register.VerifyPassword("123456789"));
             Assert.IsTrue(Register.VerifyPassword("abc12345"));
             Assert.IsTrue(Register.VerifyPassword("125abcde"));
@@ -54,8 +58,6 @@ namespace team2
             Assert.IsFalse(Register.VerifyPassword("abcdefghASijk123dkfasfdjasjdkaslkdasld456789"));
             //過短
             Assert.IsFalse(Register.VerifyPassword("abc123"));
-            //非英文開頭
-            Assert.IsFalse(Register.VerifyPassword("123abc"));
             //包含英文和數字以外的字元
             Assert.IsFalse(Register.VerifyPassword("123我是中文"));
 
