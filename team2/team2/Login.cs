@@ -8,10 +8,6 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
-     
-
-
-   
     class Login : Account
     {
         static bool login_status ;
