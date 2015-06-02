@@ -79,7 +79,25 @@ namespace team2
             return EmailExist;
         }
 
-        static internal string  RegisterAccount(string acc, string pwd1, string pwd2, string email)
+        static internal string getCAPTCHA()
+        {
+            string result = "";
+            Random seed = new Random();
+            for (int i = 0; i < 4; i++)
+            {
+                int num = seed.Next(0, 36);
+                if (num < 10)
+                    result += num.ToString();
+                else
+                {
+                    num += 55;
+                    result += Convert.ToChar(num);
+                }
+            }
+            return result;
+        }
+
+        static internal string RegisterAccount(string acc, string pwd1, string pwd2, string email, string genCode, string inputCode)
         {
             string resultMessage = "註冊尚未完成";
             try
@@ -96,6 +114,8 @@ namespace team2
                     throw new Exception("電子信箱格式不符！");
                 else if (CheckEmailExist(email))
                     throw new Exception("此電子信箱已被使用！");
+                else if (!genCode.Equals(inputCode))
+                    throw new Exception("驗證碼輸入錯誤！");
 
                 FileInfo AccountDataBase = new FileInfo("account.txt");
                 if (AccountDataBase.Exists)

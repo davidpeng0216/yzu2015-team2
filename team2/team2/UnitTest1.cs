@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text.RegularExpressions;
 
 namespace team2
 {
@@ -116,21 +117,30 @@ namespace team2
             Assert.IsFalse(Register.VerifyEmail("test123@happy@web_mail.com"));
         }
 
+        [TestMethod]
+        public void TestCAPTCHA()
+         {
+            //驗證驗證碼是否符合長度及只包含英文及數字
+             Assert.IsTrue(Regex.IsMatch(Register.getCAPTCHA(),"^[A-Z0-9]{4}$"));
+         }
+
          [TestMethod]
          public void TestRegisterAccount()
          {
+             string newCAPTCHA = Register.getCAPTCHA();
              //成功案例
-             Assert.AreEqual("註冊成功", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com"));
+             Assert.AreEqual("註冊成功", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
              //確定有存入資料庫
              Assert.IsTrue(Register.CheckAcountExist("abcde123"));
              //錯誤案例
-             Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345678", "12345678", "test_1@web_mail.com"));
-             Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345", "12345678", "test_1@web_mail.com"));
-             Assert.AreEqual("密碼格式不符！", Register.RegisterAccount("abcde1234", "12345", "12345678", "test_1@web_mail.com"));
-             Assert.AreEqual("請輸入相同的密碼！", Register.RegisterAccount("abcde1234", "12345678", "12345", "test_1@web_mail.com"));
-             Assert.AreEqual("電子信箱格式不符！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "test_1^web_mail.com"));
-             Assert.AreEqual("此帳號已存在！", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com"));
-             Assert.AreEqual("此電子信箱已被使用！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "test1@gmail.com"));
+             Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
+             Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
+             Assert.AreEqual("密碼格式不符！", Register.RegisterAccount("abcde1234", "12345", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
+             Assert.AreEqual("請輸入相同的密碼！", Register.RegisterAccount("abcde1234", "12345678", "12345", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
+             Assert.AreEqual("電子信箱格式不符！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "test_1^web_mail.com", newCAPTCHA, newCAPTCHA));
+             Assert.AreEqual("此帳號已存在！", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
+             Assert.AreEqual("此電子信箱已被使用！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "test1@gmail.com", newCAPTCHA, newCAPTCHA));
+             Assert.AreEqual("驗證碼輸入錯誤！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "9fbw2313test_1565@yahoo.com.tw", newCAPTCHA, "0000"));
          }
 
          [TestMethod]
