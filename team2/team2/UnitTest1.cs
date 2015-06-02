@@ -117,6 +117,23 @@ namespace team2
         }
 
          [TestMethod]
+         public void TestRegisterAccount()
+         {
+             //成功案例
+             Assert.AreEqual("註冊成功", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com"));
+             //確定有存入資料庫
+             Assert.IsTrue(Register.CheckAcountExist("abcde123"));
+             //錯誤案例
+             Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345678", "12345678", "test_1@web_mail.com"));
+             Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345", "12345678", "test_1@web_mail.com"));
+             Assert.AreEqual("密碼格式不符！", Register.RegisterAccount("abcde1234", "12345", "12345678", "test_1@web_mail.com"));
+             Assert.AreEqual("請輸入相同的密碼！", Register.RegisterAccount("abcde1234", "12345678", "12345", "test_1@web_mail.com"));
+             Assert.AreEqual("電子信箱格式不符！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "test_1^web_mail.com"));
+             Assert.AreEqual("此帳號已存在！", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com"));
+             Assert.AreEqual("此電子信箱已被使用！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "test1@gmail.com"));
+         }
+
+         [TestMethod]
          public void Test_Login()
          {
              //正常case
@@ -139,9 +156,5 @@ namespace team2
              //嘗試了超過5次所以失敗
              Assert.AreEqual(false, Login.login("testtest3","12345678"));
          }
-
-       
-
-
     }
 }

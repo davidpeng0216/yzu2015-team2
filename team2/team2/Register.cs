@@ -79,5 +79,39 @@ namespace team2
             return EmailExist;
         }
 
+        static internal string  RegisterAccount(string acc, string pwd1, string pwd2, string email)
+        {
+            string resultMessage = "註冊尚未完成";
+            try
+            {
+                if (!VerifyAccount(acc))
+                    throw new Exception("帳號格式不符！");
+                else if (CheckAcountExist(acc))
+                    throw new Exception("此帳號已存在！");
+                else if (!VerifyPassword(pwd1))
+                    throw new Exception("密碼格式不符！");
+                else if (!VerifyPasswordSame(pwd1, pwd2))
+                    throw new Exception("請輸入相同的密碼！");
+                else if (!VerifyEmail(email))
+                    throw new Exception("電子信箱格式不符！");
+                else if (CheckEmailExist(email))
+                    throw new Exception("此電子信箱已被使用！");
+
+                FileInfo AccountDataBase = new FileInfo("account.txt");
+                if (AccountDataBase.Exists)
+                {
+                    StreamWriter SaveAccount = AccountDataBase.AppendText();
+                    SaveAccount.WriteLine(acc + '\t' + pwd1 + '\t' + email);
+                    SaveAccount.Flush();
+                    SaveAccount.Close();
+                    resultMessage = "註冊成功";
+                }
+            }
+            catch (Exception ex)
+            {
+                resultMessage = ex.Message;
+            }
+            return resultMessage;
+        }
     }
 }
