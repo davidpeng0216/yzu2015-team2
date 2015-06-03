@@ -32,7 +32,13 @@ namespace team2
             Assert.IsFalse(Register.CheckEmailExist("Bye@gmail.com"));
 
         }
-
+        [TestMethod]
+        public void CAPTCHA_TEST()
+        {
+            Assert.AreEqual("1234", OnlineForum.C_check());
+            Assert.IsTrue(OnlineForum.CHECK("1", "1"));
+            Assert.IsFalse(OnlineForum.CHECK("1", "2"));
+        }
         [TestMethod]
         public void testAccountFormat()
         {

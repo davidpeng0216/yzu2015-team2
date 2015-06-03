@@ -8,6 +8,43 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
+    public struct CAPTCHA_check
+    {
+        public string ID, CPATCHA_code;
+        public CAPTCHA_check(string a, string b)
+        {
+            ID = a;
+            CPATCHA_code = b;
+        }
+    }
+    class OnlineForum
+    {
+        internal static bool C_check()
+        {
+            CAPTCHA_check user = new CAPTCHA_check();
+            user.ID = "Daniel Lo";
+            user.CPATCHA_code = CODE();
+            Console.WriteLine("1000+200+30+4=?\n");
+            string input = Console.ReadLine();
+
+            if (CHECK(user.CPATCHA_code, input))
+                return true;
+            else
+                return false;
+
+        }
+        internal static bool CHECK(string a, string b)
+        {
+            if (a == b)
+                return true;
+            else
+                return false;
+        }
+        internal static string CODE()
+        {
+            string code = "1234";
+            return code;
+        }
     class Register
     {
         static internal bool VerifyAccount(string account)
