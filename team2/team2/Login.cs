@@ -30,6 +30,10 @@ namespace team2
             return try_count;
         }
 
+     public void set_login_status(bool status)
+     {
+         login_status = status;
+     }
         public  bool login(string userid, string password)
         {
             if (try_count > 5)

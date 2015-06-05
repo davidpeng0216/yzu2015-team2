@@ -9,22 +9,21 @@ namespace team2
     class Logout : Login
     {
 
-        private string input_choice;
+      
         
-        public bool already_do_logout()
+        public void do_logout(string input)
         {
 
             if (get_login_status() == true)
             {
-                if (input_choice.Equals('y') || input_choice.Equals('Y'))
-                    return true;
-                else
-                    return false;
+                if (input[0].Equals('y') || input[0].Equals('Y'))
+                     set_login_status(false);
+                    
             }
 
-            else 
-                return false;
-
+            else
+                set_login_status(true);
+          
         }
     }
 }

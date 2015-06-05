@@ -212,19 +212,58 @@ namespace team2
         }
 
         [TestMethod]
+        public void Logout_get_login_status()
+        {
+
+            Logout sign_out = new Logout();
+            sign_out.login("testtest3", "12345678");
+            //測試登入狀態get true
+            Assert.AreEqual(true, sign_out.get_login_status());
+            //測試登入狀態get false
+            sign_out.login("testtest8", "12345678");
+            Assert.AreEqual(false, sign_out.get_login_status());
+        }
+
+        
+        
+        [TestMethod]
         public void LogOut()
         {
 
-            //先登入 
-            //Login 
-           // Assert.AreEqual(true, Login.login("testtest1", "12345678"));
-            //Login.login("testtest1", "12345678");
-          //  Logout go_out;
-          //  go_out.
+            Logout sign_out1 = new Logout();
+            sign_out1.login("testtest3", "12345678");
+            Assert.AreEqual(true, sign_out1.get_login_status()); //確認已登入了
+           //正常CASE 
+            sign_out1.do_logout("y");
+            Assert.AreEqual(false,  sign_out1.get_login_status()); //false 代表登出了
 
-           // Assert.AreEqual(true,)
 
-           
+            Logout sign_out2 = new Logout();
+            sign_out2.login("testtest3", "12345678");
+            Assert.AreEqual(true, sign_out2.get_login_status()); //確認已登入了
+            //正常CASE 
+            sign_out2.do_logout("Y");
+            Assert.AreEqual(false, sign_out2.get_login_status()); //false 代表登出了
+
+
+
+            Logout sign_out3 = new Logout();
+            sign_out3.login("testtest3", "12345678");
+            Assert.AreEqual(true, sign_out3.get_login_status()); //確認已登入了
+            //正常登入,登出字母打錯
+            sign_out3.do_logout("asdasbl");
+            Assert.AreEqual(true, sign_out3.get_login_status()); //false 代表登出了 ,true代表登出失敗
+
+
+
+            Logout sign_out4 = new Logout();
+          //  Assert.AreEqual (true, sign_out4.get_login_status()); //確認已登入了
+           //未登入 ,直接登出 且輸入正確
+            sign_out4.do_logout("y");
+            Assert.AreEqual (true, sign_out4.get_login_status()); //false 代表登出了 ,true代表登出失敗
+         
+
+
         }
 
 
