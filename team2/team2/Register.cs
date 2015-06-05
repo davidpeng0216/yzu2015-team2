@@ -17,34 +17,7 @@ namespace team2
             CPATCHA_code = b;
         }
     }
-    class OnlineForum
-    {
-        internal static bool C_check()
-        {
-            CAPTCHA_check user = new CAPTCHA_check();
-            user.ID = "Daniel Lo";
-            user.CPATCHA_code = CODE();
-            Console.WriteLine("1000+200+30+4=?\n");
-            string input = Console.ReadLine();
-
-            if (CHECK(user.CPATCHA_code, input))
-                return true;
-            else
-                return false;
-
-        }
-        internal static bool CHECK(string a, string b)
-        {
-            if (a == b)
-                return true;
-            else
-                return false;
-        }
-        internal static string CODE()
-        {
-            string code = "1234";
-            return code;
-        }
+    
     class Register
     {
         static internal bool VerifyAccount(string account)
@@ -81,7 +54,8 @@ namespace team2
             bool accountExist = false;
 
             char[] delimiters = new char[] { '\t', ' ' };
-            StreamReader sr = new StreamReader("account.txt");
+
+            StreamReader sr = new StreamReader("..\\..\\account.txt");
             while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
             {
                 string line = sr.ReadLine();    // 讀取文字到 line 變數
@@ -101,7 +75,7 @@ namespace team2
             bool EmailExist = false;
 
             char[] delimiters = new char[] { '\t', ' ' };
-            StreamReader sr = new StreamReader("account.txt");
+            StreamReader sr = new StreamReader("..\\..\\account.txt");
             while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
             {
                 string line = sr.ReadLine();    // 讀取文字到 line 變數
@@ -154,7 +128,8 @@ namespace team2
                 else if (!genCode.Equals(inputCode))
                     throw new Exception("驗證碼輸入錯誤！");
 
-                FileInfo AccountDataBase = new FileInfo("account.txt");
+
+                FileInfo AccountDataBase = new FileInfo("..\\..\\account.txt");
                 if (AccountDataBase.Exists)
                 {
                     StreamWriter SaveAccount = AccountDataBase.AppendText();
@@ -170,5 +145,35 @@ namespace team2
             }
             return resultMessage;
         }
+
+
+        internal static bool C_check()
+        {
+            CAPTCHA_check user = new CAPTCHA_check();
+            user.ID = "Daniel Lo";
+            user.CPATCHA_code = CODE();
+            Console.WriteLine("1000+200+30+4=?\n");
+            string input = Console.ReadLine();
+
+            if (CHECK(user.CPATCHA_code, input))
+                return true;
+            else
+                return false;
+
+        }
+        internal static bool CHECK(string a, string b)
+        {
+            if (a == b)
+                return true;
+            else
+                return false;
+        }
+        internal static string CODE()
+        {
+            string code = "1234";
+            return code;
+        }
+
+    
     }
 }

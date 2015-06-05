@@ -6,50 +6,50 @@ using System.Threading.Tasks;
 
 namespace team2
 {
-    class Account
+    class Account : Login
     {
-        private string account;
+        private string user;
         private string password;
-        private string Email;
+        private string email;
+        private int experience;
 
-        public Account(){}
-        public Account(string _account, string _password, string _Email)
+        public Account(string _user, string _password, string _email)
         {
-            this.setAcount(_account).setPassword(_password).setEmail(_Email);
+            user = _user;
+            password = _password;
+            email = _email;
+            experience = 0;
         }
 
-        public string getAccount()
+        public string User
         {
-            return this.account;
+            get { return user; }
+            set { user = value; }
         }
 
-        public string getPassword()
+        public string Password
         {
-            return this.password;
+            get { return password; }
+            set { password = value; }
         }
 
-        public string getEmail()
+        public string Email
         {
-            return this.Email;
+            get { return email; }
+            set { email = value;  }
         }
 
-        public Account setAcount(string _account)
+        public int Experience
         {
-            this.account = _account;
-            return this;
+            get { return experience; }
+            set { experience = value; }
         }
 
-        public Account setPassword(string _password)
+        public void SignUp()
         {
-            this.password = _password;
-            return this;
+            experience++;
         }
 
-        public Account setEmail(string _Email)
-        {
-            this.Email = _Email;
-            return this;
-        }
     }
 }
 

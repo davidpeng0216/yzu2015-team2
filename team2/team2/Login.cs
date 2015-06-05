@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
-    class Login : Account
+    class Login
     {
         static bool login_status ;
         static  int try_count ;
@@ -37,9 +37,10 @@ namespace team2
                 return false;
             }
             
-            bool accountExist = false;
+            bool checkPassword = false;
 
             char[] delimiters = new char[] { '\t', ' ' };
+
             StreamReader sr = new StreamReader("account.txt");
             while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
             {
@@ -49,14 +50,14 @@ namespace team2
                 {
                     if (item[1].Equals(password))
                     {
-                        accountExist = true;
+                        checkPassword = true;
                         break;
                     }
                 }
             }
             sr.Close();
 
-            if (accountExist == false)
+            if (checkPassword == false)
             {
                 try_count++;
                 login_status = false;
@@ -67,7 +68,7 @@ namespace team2
                 try_count = 0;
                 login_status = true;
             }
-            return accountExist;
+            return checkPassword;
         }
 
     }

@@ -32,13 +32,15 @@ namespace team2
             Assert.IsFalse(Register.CheckEmailExist("Bye@gmail.com"));
 
         }
+
         [TestMethod]
         public void CAPTCHA_TEST()
         {
-            Assert.AreEqual("1234", OnlineForum.C_check());
-            Assert.IsTrue(OnlineForum.CHECK("1", "1"));
-            Assert.IsFalse(OnlineForum.CHECK("1", "2"));
+            //Assert.AreEqual("1234", OnlineForum.C_check());
+            Assert.IsTrue(Register.CHECK("1", "1"));
+            Assert.IsFalse(Register.CHECK("1", "2"));
         }
+
         [TestMethod]
         public void testAccountFormat()
         {
@@ -138,6 +140,10 @@ namespace team2
              Assert.AreEqual("註冊成功", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
              //確定有存入資料庫
              Assert.IsTrue(Register.CheckAcountExist("abcde123"));
+             Assert.AreEqual("註冊成功", Register.RegisterAccount("DavidTest", "12345678", "12345678", "test_11@web_mail.com", newCAPTCHA, newCAPTCHA));
+             //確定有存入資料庫
+             Assert.IsTrue(Register.CheckAcountExist("DavidTest"));
+
              //錯誤案例
              Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
              Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
@@ -149,28 +155,45 @@ namespace team2
              Assert.AreEqual("驗證碼輸入錯誤！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "9fbw2313test_1565@yahoo.com.tw", newCAPTCHA, "0000"));
          }
 
-         [TestMethod]
-         public void Test_Login()
-         {
-             //正常case
-             Assert.AreEqual(true, Login.login("testtest1", "12345678"));
-             Assert.AreEqual(true, Login.login("testtest2", "12345678"));
-             Assert.AreEqual(true, Login.login("testtest3", "12345678"));
-           
-             //錯誤的case
-             //id 對 密碼錯
-             Assert.AreEqual(false, Login.login("testtest", "asdasggd"));
-             //空
-             Assert.AreEqual(false, Login.login("",""));
-             //"all wrong
+    }
 
-             Assert.AreEqual(false, Login.login("asfdgdfgd3", "asddfgfga"));
-             Assert.AreEqual(false, Login.login("asfdfgfdgdasd", "efddfgdfge"));
-             Assert.AreEqual(false, Login.login("","3333333333"));
-             Assert.AreEqual(false, Login.login("asassadsad3","12345678"));
+    [TestClass]
+    public class ForumTestClass
+    {
+        [TestMethod]
+        public void Test_Login()
+        {
+            //正常case
+            Assert.AreEqual(true, Login.login("testtest1", "12345678"));
+            Assert.AreEqual(true, Login.login("testtest2", "12345678"));
+            Assert.AreEqual(true, Login.login("testtest3", "12345678"));
 
-             //嘗試了超過5次所以失敗
-             Assert.AreEqual(false, Login.login("testtest3","12345678"));
-         }
+            //錯誤的case
+            //id 對 密碼錯
+            Assert.AreEqual(false, Login.login("testtest", "asdasggd"));
+            //空
+            Assert.AreEqual(false, Login.login("", ""));
+            //"all wrong
+
+            Assert.AreEqual(false, Login.login("asfdgdfgd3", "asddfgfga"));
+            Assert.AreEqual(false, Login.login("asfdfgfdgdasd", "efddfgdfge"));
+            Assert.AreEqual(false, Login.login("", "3333333333"));
+            Assert.AreEqual(false, Login.login("asassadsad3", "12345678"));
+
+            //嘗試了超過5次所以失敗
+            Assert.AreEqual(false, Login.login("testtest3", "12345678"));
+        }
+
+        [TestMethod]
+        public void Test_SignUp()
+        {
+            Account test = new Account("testtest", "12345678", "test@gmail.com");
+            int tmp = test.Experience;
+            test.SignUp();
+            Assert.AreEqual(tmp + 1, test.Experience);
+            test.SignUp();
+            Assert.AreEqual(tmp + 2, test.Experience);
+
+        }
     }
 }
