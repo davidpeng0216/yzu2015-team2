@@ -195,5 +195,19 @@ namespace team2
             Assert.AreEqual(tmp + 2, test.Experience);
 
         }
+
+        //[TestMethod]
+        //public void LogOut()
+        //{
+        //    Account test = new Account("testtest", "12345678", "test@gmail.com");
+        //    int tmp = test.Experience;
+        //    test.SignUp();
+        //    Assert.AreEqual(tmp + 1, test.Experience);
+        //    test.SignUp();
+        //    Assert.AreEqual(tmp + 2, test.Experience);
+
+        //}
+
+
     }
 }

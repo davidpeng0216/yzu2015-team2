@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
-    class Login
+    class Login : Account
     {
         static bool login_status ;
         static  int try_count ;
