@@ -193,7 +193,19 @@ namespace team2
             Assert.AreEqual(tmp + 1, test.Experience);
             test.SignUp();
             Assert.AreEqual(tmp + 2, test.Experience);
+        }
 
+        [TestMethod]
+        public void TestOnlineForum()
+        {
+            OnlineForum OF = new OnlineForum("Test1", "Hello SetArticle");
+            OF.StoreArticle(OF.GetArticleTile(), OF.GetArticleContents());
+            Assert.AreEqual("Test1",OF.GetArticleTile());
+            Assert.AreEqual("Hello SetArticle", OF.GetArticleContents());
+            
+            Assert.AreEqual("Test1\nHello SetArticle", OF.ReadArticle());
+            Assert.AreEqual("Hello SetArticle", OF.ReadArticle_byTile("Test1"));
+            
         }
     }
 }
