@@ -10,8 +10,8 @@ namespace team2
 {
     class Login : Account
     {
-        static bool login_status ;
-        static  int try_count ;
+         bool login_status ;
+         int try_count ;
 
         public Login()
         {
@@ -20,17 +20,17 @@ namespace team2
         }
      
 
-        bool get_login_status()
+      public  bool get_login_status()
         {
             return login_status;
         }
 
-        int get_try_count()
+      public int get_try_count()
         {
             return try_count;
         }
 
-        static internal bool login(string userid, string password)
+        public  bool login(string userid, string password)
         {
             if (try_count > 5)
             {

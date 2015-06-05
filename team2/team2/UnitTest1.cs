@@ -164,24 +164,39 @@ namespace team2
         public void Test_Login()
         {
             //正常case
-            Assert.AreEqual(true, Login.login("testtest1", "12345678"));
-            Assert.AreEqual(true, Login.login("testtest2", "12345678"));
-            Assert.AreEqual(true, Login.login("testtest3", "12345678"));
+           Login sign_in = new Login ();
+    
+           Assert.AreEqual(true, sign_in.login("testtest1", "12345678"));
+           Assert.AreEqual(true, sign_in.login("testtest2", "12345678"));
+           Assert.AreEqual(true, sign_in.login("testtest3", "12345678"));
+        
+         
 
             //錯誤的case
             //id 對 密碼錯
-            Assert.AreEqual(false, Login.login("testtest", "asdasggd"));
+            Assert.AreEqual(false, sign_in.login("testtest", "asdasggd"));
             //空
-            Assert.AreEqual(false, Login.login("", ""));
+            Assert.AreEqual(false, sign_in.login("", ""));
+           
+            
             //"all wrong
 
-            Assert.AreEqual(false, Login.login("asfdgdfgd3", "asddfgfga"));
-            Assert.AreEqual(false, Login.login("asfdfgfdgdasd", "efddfgdfge"));
-            Assert.AreEqual(false, Login.login("", "3333333333"));
-            Assert.AreEqual(false, Login.login("asassadsad3", "12345678"));
+            //Assert.AreEqual(false, Login.login("asfdgdfgd3", "asddfgfga"));
+            //Assert.AreEqual(false, Login.login("asfdfgfdgdasd", "efddfgdfge"));
+            //Assert.AreEqual(false, Login.login("", "3333333333"));
+            //Assert.AreEqual(false, Login.login("asassadsad3", "12345678"));
+
+            Assert.AreEqual(false, sign_in.login("", ""));
+            Assert.AreEqual(false, sign_in.login("", ""));
+            Assert.AreEqual(false, sign_in.login("", ""));
+            Assert.AreEqual(false, sign_in.login("", ""));
+            Assert.AreEqual(false, sign_in.login("", ""));
+
+
 
             //嘗試了超過5次所以失敗
-            Assert.AreEqual(false, Login.login("testtest3", "12345678"));
+            Assert.AreEqual(false, sign_in.login("testtest3", "12345678"));
+
         }
 
         [TestMethod]
@@ -196,17 +211,21 @@ namespace team2
 
         }
 
-        //[TestMethod]
-        //public void LogOut()
-        //{
-        //    Account test = new Account("testtest", "12345678", "test@gmail.com");
-        //    int tmp = test.Experience;
-        //    test.SignUp();
-        //    Assert.AreEqual(tmp + 1, test.Experience);
-        //    test.SignUp();
-        //    Assert.AreEqual(tmp + 2, test.Experience);
+        [TestMethod]
+        public void LogOut()
+        {
 
-        //}
+            //先登入 
+            //Login 
+           // Assert.AreEqual(true, Login.login("testtest1", "12345678"));
+            //Login.login("testtest1", "12345678");
+          //  Logout go_out;
+          //  go_out.
+
+           // Assert.AreEqual(true,)
+
+           
+        }
 
 
     }
