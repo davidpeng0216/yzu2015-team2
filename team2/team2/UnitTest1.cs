@@ -140,6 +140,7 @@ namespace team2
              Assert.AreEqual("註冊成功", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
              //確定有存入資料庫
              Assert.IsTrue(Register.CheckAcountExist("abcde123"));
+            
              Assert.AreEqual("註冊成功", Register.RegisterAccount("DavidTest", "12345678", "12345678", "test_11@web_mail.com", newCAPTCHA, newCAPTCHA));
              //確定有存入資料庫
              Assert.IsTrue(Register.CheckAcountExist("DavidTest"));
