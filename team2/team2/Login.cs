@@ -45,8 +45,7 @@ namespace team2
 
             char[] delimiters = new char[] { '\t', ' ' };
 
-            string path = System.Environment.CurrentDirectory;
-            StreamReader sr = new StreamReader(path + "\\account.txt");
+            StreamReader sr = new StreamReader("account.txt");
             while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
             {
                 string line = sr.ReadLine();    // 讀取文字到 line 變數
