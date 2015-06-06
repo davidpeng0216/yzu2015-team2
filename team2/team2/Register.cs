@@ -55,7 +55,8 @@ namespace team2
 
             char[] delimiters = new char[] { '\t', ' ' };
 
-            StreamReader sr = new StreamReader("account.txt");
+            string path = System.Environment.CurrentDirectory;
+            StreamReader sr = new StreamReader(path + "\\account.txt");
             while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
             {
                 string line = sr.ReadLine();    // 讀取文字到 line 變數
@@ -75,7 +76,9 @@ namespace team2
             bool EmailExist = false;
 
             char[] delimiters = new char[] { '\t', ' ' };
-            StreamReader sr = new StreamReader("account.txt");
+
+            string path = System.Environment.CurrentDirectory;
+            StreamReader sr = new StreamReader(path + "\\account.txt");
             while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
             {
                 string line = sr.ReadLine();    // 讀取文字到 line 變數
@@ -130,7 +133,8 @@ namespace team2
 
                 int experience = 0;
 
-                FileInfo AccountDataBase = new FileInfo("account.txt");
+                string path = System.Environment.CurrentDirectory;
+                FileInfo AccountDataBase = new FileInfo(path + "\\account.txt");
                 if (AccountDataBase.Exists)
                 {
                     StreamWriter SaveAccount = AccountDataBase.AppendText();
