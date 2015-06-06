@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace team2
 {
-    class Account : Login
+    class Account 
     {
         private string user;
         private string password;
@@ -20,6 +20,8 @@ namespace team2
             email = _email;
             experience = 0;
         }
+
+        public Account() { }
 
         public string User
         {

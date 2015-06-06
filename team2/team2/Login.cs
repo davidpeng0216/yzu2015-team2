@@ -8,10 +8,10 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
-    class Login
+    class Login : Account
     {
-        static bool login_status ;
-        static  int try_count ;
+         bool login_status ;
+         int try_count ;
 
         public Login()
         {
@@ -20,17 +20,21 @@ namespace team2
         }
      
 
-        bool get_login_status()
+      public  bool get_login_status()
         {
             return login_status;
         }
 
-        int get_try_count()
+      public int get_try_count()
         {
             return try_count;
         }
 
-        static internal bool login(string userid, string password)
+     public void set_login_status(bool status)
+     {
+         login_status = status;
+     }
+        public  bool login(string userid, string password)
         {
             if (try_count > 5)
             {
