@@ -162,6 +162,27 @@ namespace team2
     public class ForumTestClass
     {
         [TestMethod]
+        public void AAA_Pattern_LoginTest()
+        {
+            // Arrange
+            OnlineForum ServerClient = new OnlineForum();
+            string loginAccount= "testtest1";
+            string loginPassword = "12345678";
+            //string ArticleTitle = "New title";
+            //string ArticleContent = "As title";
+
+            // Act
+            ServerClient.Login(loginAccount, loginPassword);
+            
+            //Assert
+            Assert.AreEqual(AccountStatus.Login, ServerClient.curStatus);
+            ServerClient.Logout();
+            Assert.AreEqual(AccountStatus.Logout, ServerClient.curStatus);
+        }
+
+
+
+        [TestMethod]
         public void Test_Login()
         {
             //正常case
