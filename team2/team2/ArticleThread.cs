@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
 
 namespace team2
 {
@@ -11,6 +12,7 @@ namespace team2
     {
         private String ArticleTile;
         private String ArticleContents;
+        private Font font;
 
         public ArticleThread()
         {
@@ -90,6 +92,19 @@ namespace team2
             }
             return "No Article!";
         }
+           
+        public Boolean checkArticle()
+        {
+            String checkStr = this.ArticleContents;
+            if (checkStr.Length < 20 || checkStr.Length > 500)
+                return false;
+            else
+                return true;
+        }
 
+   /*     public void change()
+        {
+            font.Size;
+        }*/
     }
 }

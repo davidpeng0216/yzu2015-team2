@@ -243,6 +243,14 @@ namespace team2
             Assert.AreEqual("Test1\nHello SetArticle", AT.ReadArticle());
             Assert.AreEqual("Hello SetArticle", AT.ReadArticle_byTile("Test1"));
             
+            Assert.IsFalse(AT.checkArticle());
+            AT.SetArticleContents("Hello SetArticle, now checking length");
+            Assert.IsTrue(AT.checkArticle());
+            String fiveHundredCharacter = null;
+            for (int i = 0; i < 50; i++)
+                fiveHundredCharacter += "1234567890";
+            AT.SetArticleContents(fiveHundredCharacter + "1");
+            Assert.IsFalse(AT.checkArticle());
         }
 
         [TestMethod]
