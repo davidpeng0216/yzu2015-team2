@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Login.cs" />
     <Compile Include="Logout.cs" />
+    <Compile Include="ArticleThread.cs" />
     <Compile Include="OnlineForum.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="Account.cs" />

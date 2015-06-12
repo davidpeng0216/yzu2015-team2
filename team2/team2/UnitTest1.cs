@@ -214,13 +214,13 @@ namespace team2
         [TestMethod]
         public void TestOnlineForum()
         {
-            OnlineForum OF = new OnlineForum("Test1", "Hello SetArticle");
-            OF.StoreArticle(OF.GetArticleTile(), OF.GetArticleContents());
-            Assert.AreEqual("Test1",OF.GetArticleTile());
-            Assert.AreEqual("Hello SetArticle", OF.GetArticleContents());
+            ArticleThread AT = new ArticleThread("Test1", "Hello SetArticle");
+            AT.StoreArticle(AT.GetArticleTile(), AT.GetArticleContents());
+            Assert.AreEqual("Test1",AT.GetArticleTile());
+            Assert.AreEqual("Hello SetArticle", AT.GetArticleContents());
             
-            Assert.AreEqual("Test1\nHello SetArticle", OF.ReadArticle());
-            Assert.AreEqual("Hello SetArticle", OF.ReadArticle_byTile("Test1"));
+            Assert.AreEqual("Test1\nHello SetArticle", AT.ReadArticle());
+            Assert.AreEqual("Hello SetArticle", AT.ReadArticle_byTile("Test1"));
             
         }
 
