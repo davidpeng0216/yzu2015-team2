@@ -14,17 +14,23 @@ namespace team2
         private String ArticleTitle;
         private String ArticleContents;
         private String Author;
+        private bool isTitleVerify;
 
         public ArticleThread()
         {
             ArticleTitle = null;
             ArticleContents = null;
             Author = null;
+            isTitleVerify = false;
         }
 
         public ArticleThread(String _ArticleTitle, String _ArticleContents, String _Author)
         {
-            ArticleTitle = _ArticleTitle;
+            if (titleVerify(_ArticleTitle) == true)
+                ArticleTitle = _ArticleTitle;
+            else
+                ArticleTitle = null;
+
             ArticleContents = _ArticleContents;
             Author = _Author;
         }
