@@ -68,7 +68,7 @@ namespace team2
 
         public void StoreArticle(String _ArticleTile, String _ArticleContents, String _Author)
         {
-            StreamWriter sw = new StreamWriter("Article.txt", true);
+            StreamWriter sw = new StreamWriter("..\\..\\Article.txt", true);
             string toWrite = "{" + _ArticleTile + "\t" + _Author + "\t" + _ArticleContents + "}";
             //sw.WriteLine(_ArticleTile);
             //sw.WriteLine(_ArticleContents);
