@@ -68,8 +68,6 @@ namespace team2
         public void AddArticle(ArticleThread newArticle)
         {
             threads.Add(newArticle);
-
-
         }
     }
 }

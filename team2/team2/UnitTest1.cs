@@ -235,14 +235,11 @@ namespace team2
         [TestMethod]
         public void TestOnlineForum()
         {
-            ArticleThread AT = new ArticleThread("Test1", "Hello SetArticle");
-            AT.StoreArticle(AT.GetArticleTile(), AT.GetArticleContents());
-            Assert.AreEqual("Test1",AT.GetArticleTile());
+            ArticleThread AT = new ArticleThread("Test1", "Hello SetArticle", "testtest1"); //title, Contents, Author
+            AT.StoreArticle(AT.GetArticleTitle(), AT.GetArticleContents(), AT.GetAuthor());
+            Assert.AreEqual("Test1",AT.GetArticleTitle());
             Assert.AreEqual("Hello SetArticle", AT.GetArticleContents());
-            
-            Assert.AreEqual("Test1\nHello SetArticle", AT.ReadArticle());
-            Assert.AreEqual("Hello SetArticle", AT.ReadArticle_byTile("Test1"));
-            
+            Assert.AreEqual("Hello SetArticle", ArticleThread.ReadArticle_byTitle("Test1"));            
         }
 
         [TestMethod]
