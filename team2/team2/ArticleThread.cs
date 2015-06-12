@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace team2
 {
@@ -89,6 +90,24 @@ namespace team2
                 }
             }
             return "No Article!";
+        }
+
+
+        public Boolean titleVerify(string title)
+        {
+            if (title.Length < 2 || title.Length > 10)
+                return false;
+
+            //只能輸入數字和英文
+            string pattern = @"^[a-zA-Z0-9]+$";
+            Regex regex = new Regex(pattern);
+            // Compare a string against the regular expression
+            return regex.IsMatch(title);
+            
+            
+
+
+
         }
 
     }

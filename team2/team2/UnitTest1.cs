@@ -301,5 +301,29 @@ namespace team2
         }
 
 
+        [TestMethod]
+        public void title_verify()
+        {
+
+            ArticleThread artic = new ArticleThread();
+            
+            //欄位字數不可大於10字，不可小於2字
+            Assert.AreEqual(true,　artic.titleVerify("hello"));
+            Assert.AreEqual(true, artic.titleVerify("he"));
+            Assert.AreEqual(false, artic.titleVerify(""));
+            Assert.AreEqual(false, artic.titleVerify("12345678910"));
+
+
+
+            Assert.AreEqual(false, artic.titleVerify("hello*")); //含有特殊字元  
+            Assert.AreEqual(false, artic.titleVerify("hello中文哦")); //含有特殊字元  
+            Assert.AreEqual(false, artic.titleVerify("_===**")); //含有特殊字元  
+            Assert.AreEqual(false, artic.titleVerify("*//")); //含有特殊字元  
+
+
+
+        }
+
+
     }
 }
