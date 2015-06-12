@@ -235,11 +235,11 @@ namespace team2
         [TestMethod]
         public void TestOnlineForum()
         {
-            ArticleThread AT = new ArticleThread("Test1", "Hello SetArticle");
-            AT.StoreArticle(AT.GetArticleTile(), AT.GetArticleContents());
-            Assert.AreEqual("Test1",AT.GetArticleTile());
+            ArticleThread AT = new ArticleThread("Test1", "Hello SetArticle", "testtest1"); //title, Contents, Author
+            AT.StoreArticle(AT.GetArticleTitle(), AT.GetArticleContents(), AT.GetAuthor());
+            Assert.AreEqual("Test1",AT.GetArticleTitle());
             Assert.AreEqual("Hello SetArticle", AT.GetArticleContents());
-            
+           
             Assert.AreEqual("Test1\nHello SetArticle", AT.ReadArticle());
             Assert.AreEqual("Hello SetArticle", AT.ReadArticle_byTile("Test1"));
             
@@ -251,6 +251,9 @@ namespace team2
                 fiveHundredCharacter += "1234567890";
             AT.SetArticleContents(fiveHundredCharacter + "1");
             Assert.IsFalse(AT.checkArticle());
+
+            Assert.AreEqual("Hello SetArticle", ArticleThread.ReadArticle_byTitle("Test1"));            
+
         }
 
         [TestMethod]
@@ -304,6 +307,30 @@ namespace team2
             sign_out4.do_logout("y");
             Assert.AreEqual (true, sign_out4.get_login_status()); //false 代表登出了 ,true代表登出失敗
          
+
+
+        }
+
+
+        [TestMethod]
+        public void title_verify()
+        {
+
+            ArticleThread artic = new ArticleThread();
+            
+            //欄位字數不可大於10字，不可小於2字
+            Assert.AreEqual(true,　artic.titleVerify("hello"));
+            Assert.AreEqual(true, artic.titleVerify("he"));
+            Assert.AreEqual(false, artic.titleVerify(""));
+            Assert.AreEqual(false, artic.titleVerify("12345678910"));
+
+
+
+            Assert.AreEqual(false, artic.titleVerify("hello*")); //含有特殊字元  
+            Assert.AreEqual(false, artic.titleVerify("hello中文哦")); //含有特殊字元  
+            Assert.AreEqual(false, artic.titleVerify("_===**")); //含有特殊字元  
+            Assert.AreEqual(false, artic.titleVerify("*//")); //含有特殊字元  
+
 
 
         }
