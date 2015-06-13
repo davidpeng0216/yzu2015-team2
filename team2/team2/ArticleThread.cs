@@ -15,10 +15,10 @@ namespace team2
     {
         private String ArticleTitle;
         private String ArticleContents;
-        private Font font;
+       // private Font font;
 
         private String Author;
-        private bool isTitleVerify;
+        //private bool isTitleVerify;
 
 
         public ArticleThread()
@@ -26,7 +26,7 @@ namespace team2
             ArticleTitle = null;
             ArticleContents = null;
             Author = null;
-            isTitleVerify = false;
+          //  isTitleVerify = false;
         }
 
         public ArticleThread(String _ArticleTitle, String _ArticleContents, String _Author)
