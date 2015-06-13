@@ -1,12 +1,24 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace team2
 {
     [TestClass]
     public class RegisterTestClass
     {
+        List<Account> AccountList;
+
+
+        void setAcoount()
+        {
+            Account testAccount1 = new Account("1234","abcd@yahoo.com","abcd@yahoo.com");
+            AccountList.Add(testAccount1);
+        }
+
         [TestMethod]
         public void testAccountExist()
         {
@@ -224,6 +236,7 @@ namespace team2
         [TestMethod]
         public void Test_SignUp()
         {
+
             Account test = new Account("testtest", "12345678", "test@gmail.com");
             int tmp = test.Experience;
             test.SignUp();

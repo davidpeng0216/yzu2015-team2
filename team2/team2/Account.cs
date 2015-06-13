@@ -8,10 +8,10 @@ namespace team2
 {
     class Account 
     {
-        private string user;
-        private string password;
-        private string email;
-        private int experience;
+        public string user;
+        public string password;
+        public string email;
+        public int experience;
 
         public Account(string _user, string _password, string _email)
         {
