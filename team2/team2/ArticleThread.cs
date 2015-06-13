@@ -10,74 +10,49 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
-    enum ArticleInfo { Title, Contents, Author};
     class ArticleThread
     {
-        private String ArticleTitle;
-        private String ArticleContents;
-       // private Font font;
-
-        private String Author;
+        private String title;
+        private List<Article> thread;
+        private int threadNumber;
         //private bool isTitleVerify;
 
+        public ArticleThread() {}
 
-        public ArticleThread()
+        public ArticleThread(String _title, Article _article, int _threadNumber)
         {
-            ArticleTitle = null;
-            ArticleContents = null;
-            Author = null;
-          //  isTitleVerify = false;
-        }
-
-        public ArticleThread(String _ArticleTitle, String _ArticleContents, String _Author)
-        {
-            if (titleVerify(_ArticleTitle) == true)
-                ArticleTitle = _ArticleTitle;
+            if (titleVerify(_title) == true)
+                title = _title;
             else
-                ArticleTitle = null;
-
-            ArticleContents = _ArticleContents;
-            Author = _Author;
+                throw new ArgumentException("標題不符合規定(長度為2~9之英文或數字)");
+            thread = new List<Article>();
+            thread.Add(_article);
+            threadNumber = _threadNumber;
         }
 
-        public String GetArticleTitle()
+        public String Title
         {
-            return this.ArticleTitle;
+            get { return title; }
+            set { title = value; }
         }
 
-        public String GetArticleContents()
+        public int ThreadNumber
         {
-            return this.ArticleContents;
+            get { return threadNumber; }
+            set { threadNumber = value; }
         }
-
-        public String GetAuthor()
+        
+        public List<Article> Thread
         {
-            return this.Author;
+            get { return thread; }
         }
 
-        public void SetArticle(String _ArticleTitle, String _ArticleContents, String _Author)
+        public void addArticle(Article _article)
         {
-            ArticleTitle = _ArticleTitle;
-            ArticleContents = _ArticleContents;
-            Author = _Author;
+            thread.Add(_article);
         }
 
-        public void SetArticleTile(String _ArticleTitle)
-        {
-            this.ArticleTitle = _ArticleTitle;
-        }
-
-        public void SetArticleContents(String _ArticleContents)
-        {
-            this.ArticleContents = _ArticleContents;
-        }
-
-        public void SetAuthor(String _Author)
-        {
-            this.Author = _Author;
-        }
-
-        public void StoreArticle(String _ArticleTile, String _ArticleContents, String _Author)
+       /* public void StoreArticle(String _ArticleTile, String _ArticleContents, String _Author)
         {
             StreamWriter sw = new StreamWriter("..\\..\\Article.txt", true);
             string toWrite = "{" + _ArticleTile + "\t" + _Author + "\t" + _ArticleContents + "}";
@@ -85,9 +60,9 @@ namespace team2
             //sw.WriteLine(_ArticleContents);
             sw.WriteLine(toWrite);
             sw.Close();
-        }
+        }*/
 
-        static internal string[,] ReadArticle()
+       /* static internal string[,] ReadArticle()
         {
             StreamReader sr = new StreamReader("..\\..\\Article.txt");
             string content = sr.ReadToEnd();
@@ -122,9 +97,9 @@ namespace team2
                 nowPos = 0;
             }
             return article;
-        }
+        }*/
 
-        static internal string ReadArticle_byTitle(String _ArticleTitle)
+        /*static internal string ReadArticle_byTitle(String _ArticleTitle)
         {
             string[,] content = ReadArticle();
             for (int i = 0; i < content.Length; i++ )
@@ -136,38 +111,18 @@ namespace team2
                 }
             }
                 return "No Article!";
-        }
+        }*/
 
 
-        public Boolean titleVerify(string title)
+        public Boolean titleVerify(string titleToCheck)
         {
-            if (title.Length < 2 || title.Length > 10)
+            if (titleToCheck.Length < 2 || titleToCheck.Length > 10)
                 return false;
-
             //只能輸入數字和英文
             string pattern = @"^[a-zA-Z0-9]+$";
             Regex regex = new Regex(pattern);
             // Compare a string against the regular expression
-            return regex.IsMatch(title);
-            
-            
-
-
-
+            return regex.IsMatch(titleToCheck);
         }
-           
-        public Boolean checkArticle()
-        {
-            String checkStr = this.ArticleContents;
-            if (checkStr.Length < 20 || checkStr.Length > 500)
-                return false;
-            else
-                return true;
-        }
-
-   /*     public void change()
-        {
-            font.Size;
-        }*/
     }
 }

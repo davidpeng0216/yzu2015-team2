@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Article.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Logout.cs" />
     <Compile Include="ArticleThread.cs" />
