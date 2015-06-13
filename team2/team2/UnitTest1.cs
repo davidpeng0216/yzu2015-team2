@@ -240,8 +240,8 @@ namespace team2
             Assert.AreEqual("Test1",AT.GetArticleTitle());
             Assert.AreEqual("Hello SetArticle", AT.GetArticleContents());
            
-            Assert.AreEqual("Test1\nHello SetArticle", AT.ReadArticle());
-            Assert.AreEqual("Hello SetArticle", AT.ReadArticle_byTile("Test1"));
+            //Assert.AreEqual("Test1\nHello SetArticle", AT.ReadArticle());
+            Assert.AreEqual("Hello SetArticle", ArticleThread.ReadArticle_byTitle("Test1"));
             
             Assert.IsFalse(AT.checkArticle());
             AT.SetArticleContents("Hello SetArticle, now checking length");
