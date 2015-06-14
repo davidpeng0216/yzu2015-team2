@@ -228,7 +228,7 @@ namespace team2
             Assert.AreEqual(result4, LoginStatus.RejectLogin);
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void TestOnlineForum()
         {
             ArticleThread AT = new ArticleThread("Test1", "Hello SetArticle", "testtest1"); //title, Contents, Author
@@ -250,6 +250,27 @@ namespace team2
 
             Assert.AreEqual("Hello SetArticle", ArticleThread.ReadArticle_byTitle("Test1"));            
 
+        }*/
+
+        [TestMethod]
+        public void TestArticleThread()
+        {
+            Article test = new Article();
+            List<Article> testList = new List<Article>();
+            testList.Add(test);
+
+            try{
+            ArticleThread TestTitleTooShort = new ArticleThread("t", test, 1);
+            }catch(Exception ex)
+            {
+                Assert.AreEqual("標題不符合規定(長度為2~9之英文或數字)", ex.Message);
+            }
+
+            ArticleThread TestThread = new ArticleThread("test", test, 1);
+            Assert.AreEqual("test", TestThread.Title);  //test the title
+            Assert.IsTrue(Enumerable.SequenceEqual(testList, TestThread.Thread));   //test the article list
+            Assert.AreEqual(1, TestThread.ThreadNumber);    //test the thread number
+            
         }
 
         [TestMethod]
