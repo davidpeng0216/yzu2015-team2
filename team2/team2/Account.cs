@@ -8,48 +8,24 @@ namespace team2
 {
     class Account 
     {
-        public string user;
-        public string password;
-        public string email;
-        public int experience;
-
-        public Account(string _user, string _password, string _email)
-        {
-            user = _user;
-            password = _password;
-            email = _email;
-            experience = 0;
-        }
+        internal string UserID;
+        internal string Password;
+        internal string Email;
+        internal int Experience;
 
         public Account() { }
 
-        public string User
+        public Account(string _user, string _password, string _email)
         {
-            get { return user; }
-            set { user = value; }
-        }
-
-        public string Password
-        {
-            get { return password; }
-            set { password = value; }
-        }
-
-        public string Email
-        {
-            get { return email; }
-            set { email = value;  }
-        }
-
-        public int Experience
-        {
-            get { return experience; }
-            set { experience = value; }
+            UserID = _user;
+            Password = _password;
+            Email = _email;
+            Experience = 0;
         }
 
         public void SignUp()
         {
-            experience++;
+            Experience++;
         }
 
     }

@@ -13,7 +13,6 @@ namespace team2
     class OnlineForum
     {
         internal AccountStatus curStatus;
-        internal List<ArticleThread> threads;
         private Account curUser;
         private int LoginTryCount;
 
@@ -22,35 +21,19 @@ namespace team2
             curStatus = AccountStatus.Logout;
             curUser = null;
             LoginTryCount = 0;
-            threads = new List<ArticleThread>(); //從此處加入資料庫之文章
         }
 
-        public LoginStatus Login(string userid, string password)
+        public LoginStatus Login(string userid, string password, ref List<Account> AccountList)
         {
-            if (LoginTryCount > 5)
+            if (LoginTryCount > 4)
                 return LoginStatus.RejectLogin;
            
-            char[] delimiters = new char[] { '\t', ' ' };
-
-            StreamReader sr = new StreamReader("..\\..\\account.txt");
-            while (!sr.EndOfStream) // 每次讀取一行，直到檔尾            
-            {
-                string line = sr.ReadLine();    // 讀取文字到 line 變數
-                string[] item = line.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-                if (item[0].Equals(userid) && item[1].Equals(password))
-                {
-                    curUser = new Account(item[0], item[1], item[2]);
-                    curStatus = AccountStatus.Login;
-                    break;
-                }
-            }
-            sr.Close();
-
-            if (curStatus == AccountStatus.Login)
+            if (AccountList.Exists(x => x.UserID == userid && x.Password == password))
             {
                 LoginTryCount = 0;
+                curUser = AccountList.Find(x => x.UserID == userid && x.Password == password);
+                curStatus = AccountStatus.Login;
                 return LoginStatus.LoginSuccess;
-                
             }
             else
             {
@@ -67,7 +50,7 @@ namespace team2
 
         public void AddArticle(ArticleThread newArticle)
         {
-            threads.Add(newArticle);
+
         }
     }
 }

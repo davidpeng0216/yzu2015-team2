@@ -2,55 +2,46 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace team2
 {
     [TestClass]
     public class RegisterTestClass
     {
-        List<Account> AccountList;
-
-
-        void setAcoount()
-        {
-            Account testAccount1 = new Account("1234","abcd@yahoo.com","abcd@yahoo.com");
-            AccountList.Add(testAccount1);
-        }
+        List<Account> AccountDataBase = new List<Account>();
+        List<ArticleThread> ArticleThreadDataBase = new List<ArticleThread>();
 
         [TestMethod]
         public void testAccountExist()
         {
-            Assert.IsTrue(Register.CheckAcountExist("testtest1"));
-            Assert.IsTrue(Register.CheckAcountExist("testtest2"));
-            Assert.IsTrue(Register.CheckAcountExist("testtest3"));
-
-            Assert.IsFalse(Register.CheckAcountExist("testtest"));
-            Assert.IsFalse(Register.CheckAcountExist("DDDDDDDDD"));
-
-            Assert.IsFalse(Register.CheckAcountExist("Test1"));
-            Assert.IsFalse(Register.CheckAcountExist("test1@gmail.com"));
+            // Arrange
+            string UserID = "TestUserID";
+            string Password = "TestPassword";
+            string Email = "Test@email.com";
+            string Code = Register.getCAPTCHA();
+            //Act
+            RegisterValue Result1 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
+            RegisterValue Result2 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
+            //Assert
+            Assert.AreEqual(Result1, RegisterValue.RegisterSuccess);
+            Assert.AreEqual(Result2, RegisterValue.AccountExist);
         }
 
         [TestMethod]
         public void testEmailExist()
         {
-            Assert.IsTrue(Register.CheckEmailExist("test1@gmail.com"));
-            Assert.IsTrue(Register.CheckEmailExist("test2@gmail.com"));
-            Assert.IsTrue(Register.CheckEmailExist("test3@gmail.com"));
-
-            Assert.IsFalse(Register.CheckEmailExist("Hello@gmail.com"));
-            Assert.IsFalse(Register.CheckEmailExist("Bye@gmail.com"));
-
-        }
-
-        [TestMethod]
-        public void CAPTCHA_TEST()
-        {
-            //Assert.AreEqual("1234", OnlineForum.C_check());
-            Assert.IsTrue(Register.CHECK("1", "1"));
-            Assert.IsFalse(Register.CHECK("1", "2"));
+            // Arrange
+            string UserID = "TestUserID";
+            string OtherUserID = "TestUserID2";
+            string Password = "TestPassword";
+            string Email = "Test@email.com";
+            string Code = Register.getCAPTCHA();
+            //Act
+            RegisterValue Result1 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
+            RegisterValue Result2 = Register.RegisterAccount(OtherUserID, Password, Password, Email, Code, Code, ref AccountDataBase);
+            //Assert
+            Assert.AreEqual(Result1, RegisterValue.RegisterSuccess);
+            Assert.AreEqual(Result2, RegisterValue.EmailExist);
         }
 
         [TestMethod]
@@ -78,7 +69,6 @@ namespace team2
         public void testPasswordFormat()
         {
             //test password's format
-
 
             //正常密碼Case
             Assert.IsTrue(Register.VerifyPassword("123456789"));
@@ -145,27 +135,39 @@ namespace team2
          }
 
          [TestMethod]
-         public void TestRegisterAccount()
+         public void TestRegisterAccount() //整體測試
          {
-             string newCAPTCHA = Register.getCAPTCHA();
-             //成功案例
-             Assert.AreEqual("註冊成功", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
-             //確定有存入資料庫
-             Assert.IsTrue(Register.CheckAcountExist("abcde123"));
-            
-             Assert.AreEqual("註冊成功", Register.RegisterAccount("DavidTest", "12345678", "12345678", "test_11@web_mail.com", newCAPTCHA, newCAPTCHA));
-             //確定有存入資料庫
-             Assert.IsTrue(Register.CheckAcountExist("DavidTest"));
-
-             //錯誤案例
-             Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
-             Assert.AreEqual("帳號格式不符！", Register.RegisterAccount("e123", "12345", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
-             Assert.AreEqual("密碼格式不符！", Register.RegisterAccount("abcde1234", "12345", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
-             Assert.AreEqual("請輸入相同的密碼！", Register.RegisterAccount("abcde1234", "12345678", "12345", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
-             Assert.AreEqual("電子信箱格式不符！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "test_1^web_mail.com", newCAPTCHA, newCAPTCHA));
-             Assert.AreEqual("此帳號已存在！", Register.RegisterAccount("abcde123", "12345678", "12345678", "test_1@web_mail.com", newCAPTCHA, newCAPTCHA));
-             Assert.AreEqual("此電子信箱已被使用！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "test1@gmail.com", newCAPTCHA, newCAPTCHA));
-             Assert.AreEqual("驗證碼輸入錯誤！", Register.RegisterAccount("abcde1234", "12345678", "12345678", "9fbw2313test_1565@yahoo.com.tw", newCAPTCHA, "0000"));
+             // Arrange
+             string CorrectUserID1 = "CorrectUserID1";
+             string CorrectUserID2 = "CorrectUserID2";
+             string ErrorUserID = "測試用UserID1";
+             string CorrectPassword = "12345678Pwd";
+             string ErrorPassword = "測試用123456";
+             string CorrectEmail1 = "Correct1@mail.com";
+             string CorrectEmail2 = "Correct2@mail.com";
+             string ErrorEmail = "電子信箱@mail.edu.tw";
+             string genCode = Register.getCAPTCHA();
+             //Act
+             RegisterValue result1 = Register.RegisterAccount(CorrectUserID1, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterValue result2 = Register.RegisterAccount(ErrorUserID, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterValue result3 = Register.RegisterAccount(CorrectUserID1, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterValue result4 = Register.RegisterAccount(CorrectUserID2, ErrorPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterValue result5 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, ErrorPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterValue result6 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, ErrorEmail, genCode, genCode, ref AccountDataBase);
+             RegisterValue result7 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterValue result8 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail2, genCode, "0000", ref AccountDataBase);
+             RegisterValue result9 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail2, genCode, genCode, ref AccountDataBase);
+             //Assert
+             Assert.AreEqual(result1, RegisterValue.RegisterSuccess);
+             Assert.AreEqual(result2, RegisterValue.AccountFormatFail);
+             Assert.AreEqual(result3, RegisterValue.AccountExist);
+             Assert.AreEqual(result4, RegisterValue.PasswordFormatFail);
+             Assert.AreEqual(result5, RegisterValue.PasswordSame);
+             Assert.AreEqual(result6, RegisterValue.EmailFormatFail);
+             Assert.AreEqual(result7, RegisterValue.EmailExist);
+             Assert.AreEqual(result8, RegisterValue.CAPTCHAFail);
+             Assert.AreEqual(result9, RegisterValue.RegisterSuccess);
+             Assert.AreEqual(2, AccountDataBase.Count);
          }
 
     }
@@ -173,76 +175,57 @@ namespace team2
     [TestClass]
     public class ForumTestClass
     {
+        List<Account> AccountDataBase = new List<Account>();
+        List<ArticleThread> ArticleThreadDataBase = new List<ArticleThread>();
+
+        void setAcoounts()
+        {
+            Account testAccount1 = new Account("TestAccount1", "12345678", "TestAccount1@mail.com");
+            Account testAccount2 = new Account("TestAccount2", "12345678", "TestAccount2@mail.com");
+            Account testAccount3 = new Account("TestAccount3", "12345678", "TestAccount3@mail.com");
+            AccountDataBase.Add(testAccount1);
+            AccountDataBase.Add(testAccount2);
+            AccountDataBase.Add(testAccount3);
+        }
+
+        void setArticleThreads()
+        {
+
+        }
+
         [TestMethod]
-        public void AAA_Pattern_LoginTest()
+        public void LoginLogoutTest()
         {
             // Arrange
             OnlineForum ServerClient = new OnlineForum();
-            string loginAccount= "testtest1";
+            setAcoounts();
+            string notExistAccount = "NotExistAccount1";
+            string errorPassword = "123456789";
+            string loginAccount = "TestAccount1";
             string loginPassword = "12345678";
-            //string ArticleTitle = "New title";
-            //string ArticleContent = "As title";
-
-            // Act
-            ServerClient.Login(loginAccount, loginPassword);
-            
-            //Assert
+            // Act1
+            LoginStatus result1 = ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
+            LoginStatus result2 = ServerClient.Login(loginAccount, errorPassword, ref AccountDataBase);
+            LoginStatus result3 = ServerClient.Login(loginAccount, loginPassword, ref AccountDataBase);     
+            //Assert1
             Assert.AreEqual(AccountStatus.Login, ServerClient.curStatus);
+            Assert.AreEqual(result1, LoginStatus.LoginFail);
+            Assert.AreEqual(result2, LoginStatus.LoginFail);
+            Assert.AreEqual(result3, LoginStatus.LoginSuccess);
+            //Act2
             ServerClient.Logout();
+            //Assert2
             Assert.AreEqual(AccountStatus.Logout, ServerClient.curStatus);
-        }
-
-
-
-        [TestMethod]
-        public void Test_Login()
-        {
-            //正常case
-           Login sign_in = new Login ();
-    
-           Assert.AreEqual(true, sign_in.login("testtest1", "12345678"));
-           Assert.AreEqual(true, sign_in.login("testtest2", "12345678"));
-           Assert.AreEqual(true, sign_in.login("testtest3", "12345678"));
-        
-         
-
-            //錯誤的case
-            //id 對 密碼錯
-            Assert.AreEqual(false, sign_in.login("testtest", "asdasggd"));
-            //空
-            Assert.AreEqual(false, sign_in.login("", ""));
-           
-            
-            //"all wrong
-
-            //Assert.AreEqual(false, Login.login("asfdgdfgd3", "asddfgfga"));
-            //Assert.AreEqual(false, Login.login("asfdfgfdgdasd", "efddfgdfge"));
-            //Assert.AreEqual(false, Login.login("", "3333333333"));
-            //Assert.AreEqual(false, Login.login("asassadsad3", "12345678"));
-
-            Assert.AreEqual(false, sign_in.login("", ""));
-            Assert.AreEqual(false, sign_in.login("", ""));
-            Assert.AreEqual(false, sign_in.login("", ""));
-            Assert.AreEqual(false, sign_in.login("", ""));
-            Assert.AreEqual(false, sign_in.login("", ""));
-
-
-
-            //嘗試了超過5次所以失敗
-            Assert.AreEqual(false, sign_in.login("testtest3", "12345678"));
-
-        }
-
-        [TestMethod]
-        public void Test_SignUp()
-        {
-
-            Account test = new Account("testtest", "12345678", "test@gmail.com");
-            int tmp = test.Experience;
-            test.SignUp();
-            Assert.AreEqual(tmp + 1, test.Experience);
-            test.SignUp();
-            Assert.AreEqual(tmp + 2, test.Experience);
+            //Act3
+            ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
+            ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
+            ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
+            ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
+            ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
+            LoginStatus result4 = ServerClient.Login(loginAccount, loginPassword, ref AccountDataBase);
+            //Assert3
+            Assert.AreEqual(AccountStatus.Logout, ServerClient.curStatus);
+            Assert.AreEqual(result4, LoginStatus.RejectLogin);
         }
 
         [TestMethod]
@@ -268,62 +251,6 @@ namespace team2
             Assert.AreEqual("Hello SetArticle", ArticleThread.ReadArticle_byTitle("Test1"));            
 
         }
-
-        [TestMethod]
-        public void Logout_get_login_status()
-        {
-
-            Logout sign_out = new Logout();
-            sign_out.login("testtest3", "12345678");
-            //測試登入狀態get true
-            Assert.AreEqual(true, sign_out.get_login_status());
-            //測試登入狀態get false
-            sign_out.login("testtest8", "12345678");
-            Assert.AreEqual(false, sign_out.get_login_status());
-        }
-
-        
-        
-        [TestMethod]
-        public void LogOut()
-        {
-
-            Logout sign_out1 = new Logout();
-            sign_out1.login("testtest3", "12345678");
-            Assert.AreEqual(true, sign_out1.get_login_status()); //確認已登入了
-           //正常CASE 
-            sign_out1.do_logout("y");
-            Assert.AreEqual(false,  sign_out1.get_login_status()); //false 代表登出了
-
-
-            Logout sign_out2 = new Logout();
-            sign_out2.login("testtest3", "12345678");
-            Assert.AreEqual(true, sign_out2.get_login_status()); //確認已登入了
-            //正常CASE 
-            sign_out2.do_logout("Y");
-            Assert.AreEqual(false, sign_out2.get_login_status()); //false 代表登出了
-
-
-
-            Logout sign_out3 = new Logout();
-            sign_out3.login("testtest3", "12345678");
-            Assert.AreEqual(true, sign_out3.get_login_status()); //確認已登入了
-            //正常登入,登出字母打錯
-            sign_out3.do_logout("asdasbl");
-            Assert.AreEqual(true, sign_out3.get_login_status()); //false 代表登出了 ,true代表登出失敗
-
-
-
-            Logout sign_out4 = new Logout();
-          //  Assert.AreEqual (true, sign_out4.get_login_status()); //確認已登入了
-           //未登入 ,直接登出 且輸入正確
-            sign_out4.do_logout("y");
-            Assert.AreEqual (true, sign_out4.get_login_status()); //false 代表登出了 ,true代表登出失敗
-         
-
-
-        }
-
 
         [TestMethod]
         public void title_verify()
