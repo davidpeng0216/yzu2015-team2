@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace team2
 {
     class Article
@@ -14,12 +15,16 @@ namespace team2
         private int threadNumber;
 
         public Article() {}
-        public Article(string _contents, string _author)
+        public Article(string _contents, string _author, int _threadNumber)
         {
-            contents = _contents;
+            if (checkArticle(_contents))
+                contents = _contents;
+            else
+                throw new FormatException("文章內容不符規定(長度需為21~499)");
             author = _author;
             publishDate = new DateTime();
             publishDate = DateTime.Now;
+            threadNumber = _threadNumber;
         }
 
         public string Contents
@@ -40,10 +45,9 @@ namespace team2
             set { publishDate = value; }
         }
 
-        public Boolean checkArticle()
+        public Boolean checkArticle(string contentsToCheck)
         {
-            String checkStr = contents;
-            if (checkStr.Length < 20 || checkStr.Length > 500)
+            if (contentsToCheck.Length < 20 || contentsToCheck.Length > 500)
                 return false;
             else
                 return true;
