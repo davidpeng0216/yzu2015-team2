@@ -8,6 +8,7 @@ using System.Text;
 namespace team2
 {
     [TestClass]
+    [DeploymentItem("account.txt")]
     public class RegisterTestClass
     {
         List<Account> AccountList;
@@ -272,18 +273,26 @@ namespace team2
         [TestMethod]
         public void TestArticleThread()
         {
-            Article test = new Article();
+            DateTime testTime = new DateTime();
+            testTime = DateTime.Now;
+            string testContents = "It is article test!";
+            string testAuthor = "testAuthor1";
+            Article testArticle = new Article(testContents, testAuthor);
+            Assert.AreEqual(testTime, testArticle.PublishDate);
+            Assert.AreEqual(testContents, testArticle.Contents);
+            Assert.AreEqual(testAuthor, testArticle.Author);
+
             List<Article> testList = new List<Article>();
-            testList.Add(test);
+            testList.Add(testArticle);
 
             try{
-            ArticleThread TestTitleTooShort = new ArticleThread("t", test, 1);
+                ArticleThread TestTitleTooShort = new ArticleThread("t", testArticle, 1);
             }catch(Exception ex)
             {
-                Assert.AreEqual("標題不符合規定(長度為2~9之英文或數字)", ex.Message);
+                Assert.AreEqual("標題不符合規定(長度需為2~9之英文或數字)", ex.Message);
             }
 
-            ArticleThread TestThread = new ArticleThread("test", test, 1);
+            ArticleThread TestThread = new ArticleThread("test", testArticle, 1);
             Assert.AreEqual("test", TestThread.Title);  //test the title
             Assert.IsTrue(Enumerable.SequenceEqual(testList, TestThread.Thread));   //test the article list
             Assert.AreEqual(1, TestThread.ThreadNumber);    //test the thread number

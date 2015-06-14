@@ -11,13 +11,15 @@ namespace team2
         private string contents;
         private string author;
         private DateTime publishDate;
+        private int threadNumber;
 
         public Article() {}
-        public Article(string _contents, string _author, DateTime _publishDate)
+        public Article(string _contents, string _author)
         {
             contents = _contents;
             author = _author;
-            publishDate = _publishDate;
+            publishDate = new DateTime();
+            publishDate = DateTime.Now;
         }
 
         public string Contents
@@ -45,6 +47,12 @@ namespace team2
                 return false;
             else
                 return true;
+        }
+
+        public int ThreadNumber
+        {
+            get { return threadNumber; }
+            set { threadNumber = value; }
         }
        
     }
