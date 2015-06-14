@@ -246,41 +246,45 @@ namespace team2
             Assert.AreEqual(tmp + 2, test.Experience);
         }
 
-        /*[TestMethod]
-        public void TestOnlineForum()
+        [TestMethod]
+        public void TestArticle()
         {
-            ArticleThread AT = new ArticleThread("Test1", "Hello SetArticle", "testtest1"); //title, Contents, Author
-            AT.StoreArticle(AT.GetArticleTitle(), AT.GetArticleContents(), AT.GetAuthor());
-            Assert.AreEqual("Test1",AT.GetArticleTitle());
-            Assert.AreEqual("Hello SetArticle", AT.GetArticleContents());
-           
-            //Assert.AreEqual("Test1\nHello SetArticle", AT.ReadArticle());
-            Assert.AreEqual("Hello SetArticle", ArticleThread.ReadArticle_byTitle("Test1"));
-            
-            Assert.IsFalse(AT.checkArticle());
-            AT.SetArticleContents("Hello SetArticle, now checking length");
-            Assert.IsTrue(AT.checkArticle());
-            String fiveHundredCharacter = null;
-            for (int i = 0; i < 50; i++)
-                fiveHundredCharacter += "1234567890";
-            AT.SetArticleContents(fiveHundredCharacter + "1");
-            Assert.IsFalse(AT.checkArticle());
+            string testAuthor = "Author";
+            try
+            {
+                string testContentsLess20 = "123";
+                Article testContentsTooShort = new Article(testContentsLess20, testAuthor, 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual("文章內容不符規定(長度需為21~499)", ex.Message);
+            }
 
-            Assert.AreEqual("Hello SetArticle", ArticleThread.ReadArticle_byTitle("Test1"));            
+            try
+            {
+                string testContentsOver500 = "0123456789";
+                for (int i = 0; i < 6; i++)
+                    testContentsOver500 += testContentsOver500;
 
-        }*/
+                Article testContentsTooLong = new Article(testContentsOver500, testAuthor, 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual("文章內容不符規定(長度需為21~499)", ex.Message);
+            }
 
+            string testContentsAccept = "012345678901234567890";
+            Article testArticle = new Article(testContentsAccept, testAuthor, 1);
+            Assert.AreEqual(testContentsAccept, testArticle.Contents);
+            Assert.AreEqual(testAuthor, testArticle.Author);
+            Assert.AreEqual(1, testArticle.ThreadNumber);
+
+
+        }
         [TestMethod]
         public void TestArticleThread()
         {
-            DateTime testTime = new DateTime();
-            testTime = DateTime.Now;
-            string testContents = "It is article test!";
-            string testAuthor = "testAuthor1";
-            Article testArticle = new Article(testContents, testAuthor);
-            Assert.AreEqual(testTime, testArticle.PublishDate);
-            Assert.AreEqual(testContents, testArticle.Contents);
-            Assert.AreEqual(testAuthor, testArticle.Author);
+            Article testArticle = new Article("It is article test!123456", "testAuthor", 1);
 
             List<Article> testList = new List<Article>();
             testList.Add(testArticle);
