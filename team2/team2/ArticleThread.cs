@@ -24,7 +24,7 @@ namespace team2
             if (titleVerify(_title) == true)
                 title = _title;
             else
-                throw new ArgumentException("標題不符合規定(長度為2~9之英文或數字)");
+                throw new ArgumentException("標題不符合規定(長度需為2~9之英文或數字)");
             thread = new List<Article>();
             thread.Add(_article);
             threadNumber = _threadNumber;
