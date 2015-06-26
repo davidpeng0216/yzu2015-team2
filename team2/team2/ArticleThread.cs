@@ -24,7 +24,7 @@ namespace team2
             if (titleVerify(_title) == true)
                 title = _title;
             else
-                throw new ArgumentException("標題不符合規定(長度需為2~9之英文或數字)");
+                throw new ArgumentException("標題不符合規定");
             thread = new List<Article>();
             thread.Add(_article);
             threadNumber = _threadNumber;
@@ -118,11 +118,8 @@ namespace team2
         {
             if (titleToCheck.Length < 2 || titleToCheck.Length > 10)
                 return false;
-            //只能輸入數字和英文
-            string pattern = @"^[a-zA-Z0-9]+$";
-            Regex regex = new Regex(pattern);
-            // Compare a string against the regular expression
-            return regex.IsMatch(titleToCheck);
+            else
+                return true;
         }
     }
 }

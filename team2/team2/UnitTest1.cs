@@ -180,7 +180,7 @@ namespace team2
         List<Account> AccountDataBase = new List<Account>();
         List<ArticleThread> ArticleThreadDataBase = new List<ArticleThread>();
 
-        void setAcoounts()
+        void setAccounts()
         {
             Account testAccount1 = new Account("TestAccount1", "12345678", "TestAccount1@mail.com");
             Account testAccount2 = new Account("TestAccount2", "12345678", "TestAccount2@mail.com");
@@ -200,7 +200,7 @@ namespace team2
         {
             // Arrange
             OnlineForum ServerClient = new OnlineForum();
-            setAcoounts();
+            setAccounts();
             string notExistAccount = "NotExistAccount1";
             string errorPassword = "123456789";
             string loginAccount = "TestAccount1";
@@ -277,7 +277,7 @@ namespace team2
                 ArticleThread TestTitleTooShort = new ArticleThread("t", testArticle, 1);
             }catch(Exception ex)
             {
-                Assert.AreEqual("標題不符合規定(長度需為2~9之英文或數字)", ex.Message);
+                Assert.AreEqual("標題不符合規定", ex.Message);
             }
 
             ArticleThread TestThread = new ArticleThread("test", testArticle, 1);
@@ -290,26 +290,41 @@ namespace team2
         [TestMethod]
         public void title_verify()
         {
-
             ArticleThread artic = new ArticleThread();
             
             //欄位字數不可大於10字，不可小於2字
             Assert.AreEqual(true,　artic.titleVerify("hello"));
             Assert.AreEqual(true, artic.titleVerify("he"));
+            Assert.AreEqual(true, artic.titleVerify("hello*")); //含有特殊字元  
+            Assert.AreEqual(true, artic.titleVerify("hello中文哦")); //含有特殊字元  
+            Assert.AreEqual(true, artic.titleVerify("_===**")); //含有特殊字元  
             Assert.AreEqual(false, artic.titleVerify(""));
-            Assert.AreEqual(false, artic.titleVerify("12345678910"));
-
-
-
-            Assert.AreEqual(false, artic.titleVerify("hello*")); //含有特殊字元  
-            Assert.AreEqual(false, artic.titleVerify("hello中文哦")); //含有特殊字元  
-            Assert.AreEqual(false, artic.titleVerify("_===**")); //含有特殊字元  
-            Assert.AreEqual(false, artic.titleVerify("*//")); //含有特殊字元  
-
-
-
+            Assert.AreEqual(false, artic.titleVerify("12345678910測試"));
         }
 
+         [TestMethod]
+        public void TestArticleByOnlineForum()
+        {
+             //Arrange
+             OnlineForum OF = new OnlineForum();
+             setAccounts();
+             OF.Login("TestAccount1", "12345678", ref AccountDataBase);
 
+             string testArticleTitle = "Article";
+             string testArticleContent = "這是一個測試的文章，裡面必須含有至少21個字元。\n<br>並且能儲存換行字元，無論是程式或網頁";
+             string titleTooShort = "";
+             string titleTooLong = "這是一個好長好長好長好長好長好長好長的標題";
+             string contentTooShort = "很短的文章";
+             //Act
+             AddNewArticleThreadStatus result1 = OF.AddArticleThread(titleTooShort, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
+             AddNewArticleThreadStatus result2 = OF.AddArticleThread(titleTooLong, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
+             AddNewArticleThreadStatus result3 = OF.AddArticleThread(testArticleTitle, contentTooShort, OF.curUser.UserID, ref ArticleThreadDataBase);
+             AddNewArticleThreadStatus result4 = OF.AddArticleThread(testArticleTitle, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
+             //Arrest
+             Assert.AreEqual(AddNewArticleThreadStatus.TitleFail, result1);
+             Assert.AreEqual(AddNewArticleThreadStatus.TitleFail, result2);
+             Assert.AreEqual(AddNewArticleThreadStatus.ContentFail,result3);
+             Assert.AreEqual(AddNewArticleThreadStatus.AddSuccess,result4);
+        }
     }
 }

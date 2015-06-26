@@ -9,11 +9,12 @@ namespace team2
 {
     enum AccountStatus {Logout, Login};
     enum LoginStatus {LoginSuccess, LoginFail, RejectLogin};
+    enum AddNewArticleThreadStatus {AddSuccess, TitleFail, ContentFail, OtherFail};
 
     class OnlineForum
     {
         internal AccountStatus curStatus;
-        private Account curUser;
+        internal Account curUser;
         private int LoginTryCount;
 
         public OnlineForum()
@@ -48,9 +49,25 @@ namespace team2
             curStatus = AccountStatus.Logout;
         }
 
-        public void AddArticle(ArticleThread newArticle)
+        public AddNewArticleThreadStatus AddArticleThread(string title, string content, string userID, ref List<ArticleThread> ArticleThreadDatabase)
         {
-
+            int newArticleID = ArticleThreadDatabase.Count + 1;
+            try
+            {
+                Article newArticle = new Article(content, userID, newArticleID);
+                ArticleThread newArticleThread = new ArticleThread(title, newArticle, newArticleID);
+                ArticleThreadDatabase.Add(newArticleThread);
+                return AddNewArticleThreadStatus.AddSuccess;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "標題不符合規定")
+                    return AddNewArticleThreadStatus.TitleFail;
+                else if (ex.Message == "文章內容不符規定(長度需為21~499)")
+                    return AddNewArticleThreadStatus.ContentFail;
+                else
+                    return AddNewArticleThreadStatus.OtherFail;
+            }
         }
     }
 }
