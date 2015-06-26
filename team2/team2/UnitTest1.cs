@@ -316,26 +316,27 @@ namespace team2
         {
             Assert.AreEqual(1, 1);
             Article testArticle = new Article("It is article test!123456", "testAuthor", 1);
-
             List<Article> testList = new List<Article>();
             testList.Add(testArticle);
+            ArticleThread TestTitleTooShort = new ArticleThread();
+            TestTitleTooShort.AddComment(1, "awesome");
+            TestTitleTooShort.AddComment(1, "hello");
+            TestTitleTooShort.AddComment(1, "word");
+            TestTitleTooShort.AddComment(1, "wonderful project");
 
-            try
-            {
-                ArticleThread TestTitleTooShort = new ArticleThread("t", testArticle, 1);
-            }
-            catch (Exception ex)
-            {
-                Assert.AreEqual("標題不符合規定(長度需為2~9之英文或數字)", ex.Message);
-            }
+            Assert.AreEqual ("awesome",TestTitleTooShort.GetComment(1)[0]);
+            Assert.AreEqual("hello", TestTitleTooShort.GetComment(1)[1]);
+            Assert.AreEqual("word", TestTitleTooShort.GetComment(1)[2]);
+            Assert.AreEqual("wonderful project", TestTitleTooShort.GetComment(1)[3]);
 
-            //
-//            TestTitleTooShort
 
-            //ArticleThread TestThread = new ArticleThread("test", testArticle, 1);
-            //Assert.AreEqual("test", TestThread.Title);  //test the title
-            //Assert.IsTrue(Enumerable.SequenceEqual(testList, TestThread.Thread));   //test the article list
-            //Assert.AreEqual(1, TestThread.ThreadNumber);    //test the thread number
+            //輸入了不存在的title編號
+            //Assert.AreEqual("unknow title number", TestTitleTooShort.GetComment(2)[3]);
+
+
+
+
+
 
 
 

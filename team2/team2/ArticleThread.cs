@@ -15,8 +15,10 @@ namespace team2
         private String title;
         private List<Article> thread;
         private int threadNumber;
-        private List<string> replythread; 
         //private bool isTitleVerify;
+        //用來紀錄回文
+        public Dictionary<int, List<string>> articleComments = new Dictionary<int, List<string>>();
+
 
         public ArticleThread() {}
 
@@ -124,6 +126,25 @@ namespace team2
             Regex regex = new Regex(pattern);
             // Compare a string against the regular expression
             return regex.IsMatch(titleToCheck);
+        }
+
+
+        public void AddComment(int titleNum, string comment)
+        {
+            if (!articleComments.ContainsKey(titleNum))
+            {
+                articleComments.Add(titleNum, new List<string>());
+            }
+            articleComments[titleNum].Add(comment);
+        }
+
+        public List<string> GetComment(int titleNum)
+        {
+            if (articleComments.ContainsKey(titleNum))
+            {
+                return articleComments[titleNum];
+            }
+            return null;
         }
 
 
