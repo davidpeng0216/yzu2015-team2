@@ -129,13 +129,21 @@ namespace team2
         }
 
 
-        public void AddComment(int titleNum, string comment)
+        public bool  AddComment(int titleNum, string comment)
         {
+            if (comment.Length > 50)
+                return false;
+            else if (comment.Length <= 0)
+                return false;
+
+
             if (!articleComments.ContainsKey(titleNum))
             {
                 articleComments.Add(titleNum, new List<string>());
             }
             articleComments[titleNum].Add(comment);
+
+            return true;
         }
 
         public List<string> GetComment(int titleNum)

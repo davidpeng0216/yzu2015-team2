@@ -319,11 +319,24 @@ namespace team2
             List<Article> testList = new List<Article>();
             testList.Add(testArticle);
             ArticleThread TestTitleTooShort = new ArticleThread();
-            TestTitleTooShort.AddComment(1, "awesome");
-            TestTitleTooShort.AddComment(1, "hello");
-            TestTitleTooShort.AddComment(1, "word");
-            TestTitleTooShort.AddComment(1, "wonderful project");
+            
+            //回復文章
+            //正常case
+            Assert.AreEqual(true,TestTitleTooShort.AddComment(1,"awesome"));
+            Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "hello"));
+            Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "word"));
+            Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "wonderful project"));
+           
+            //未輸入就回文
+            Assert.AreEqual(false, TestTitleTooShort.AddComment(1, ""));
 
+            //輸入過長的回文 (最多50)
+            Assert.AreEqual(false, TestTitleTooShort.AddComment(1, "asdasdasdasdasdasdasfdsfjrijfirwjfijrkfrifjeijfiejfiejfiejfiejamsndkde"));
+
+
+           
+            //查看回文
+            //正常case
             Assert.AreEqual ("awesome",TestTitleTooShort.GetComment(1)[0]);
             Assert.AreEqual("hello", TestTitleTooShort.GetComment(1)[1]);
             Assert.AreEqual("word", TestTitleTooShort.GetComment(1)[2]);
@@ -331,7 +344,10 @@ namespace team2
 
 
             //輸入了不存在的title編號
-            //Assert.AreEqual("unknow title number", TestTitleTooShort.GetComment(2)[3]);
+            Assert.AreEqual(null, TestTitleTooShort.GetComment(2));
+            Assert.AreEqual(null, TestTitleTooShort.GetComment(0));
+
+
 
 
 
