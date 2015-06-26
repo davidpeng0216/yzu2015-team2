@@ -311,5 +311,36 @@ namespace team2
         }
 
 
+        [TestMethod]
+        public void ReplyArticleThread()
+        {
+            Assert.AreEqual(1, 1);
+            Article testArticle = new Article("It is article test!123456", "testAuthor", 1);
+
+            List<Article> testList = new List<Article>();
+            testList.Add(testArticle);
+
+            try
+            {
+                ArticleThread TestTitleTooShort = new ArticleThread("t", testArticle, 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual("標題不符合規定(長度需為2~9之英文或數字)", ex.Message);
+            }
+
+            //
+//            TestTitleTooShort
+
+            //ArticleThread TestThread = new ArticleThread("test", testArticle, 1);
+            //Assert.AreEqual("test", TestThread.Title);  //test the title
+            //Assert.IsTrue(Enumerable.SequenceEqual(testList, TestThread.Thread));   //test the article list
+            //Assert.AreEqual(1, TestThread.ThreadNumber);    //test the thread number
+
+
+
+        }
+
+
     }
 }

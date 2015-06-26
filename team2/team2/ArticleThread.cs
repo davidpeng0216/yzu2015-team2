@@ -15,6 +15,7 @@ namespace team2
         private String title;
         private List<Article> thread;
         private int threadNumber;
+        private List<string> replythread; 
         //private bool isTitleVerify;
 
         public ArticleThread() {}
@@ -124,5 +125,8 @@ namespace team2
             // Compare a string against the regular expression
             return regex.IsMatch(titleToCheck);
         }
+
+
+       
     }
 }
