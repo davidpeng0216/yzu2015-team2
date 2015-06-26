@@ -10,6 +10,7 @@ namespace team2
     enum AccountStatus {Logout, Login};
     enum LoginStatus {LoginSuccess, LoginFail, RejectLogin};
     enum AddNewArticleThreadStatus {AddSuccess, TitleFail, ContentFail, OtherFail};
+    enum ReplyArticleThradStatus {AddSucess, NoThread, ContentFail, OtherFail};
 
     class OnlineForum
     {
@@ -68,6 +69,34 @@ namespace team2
                 else
                     return AddNewArticleThreadStatus.OtherFail;
             }
+        }
+
+        public ReplyArticleThradStatus ReplyArticleThread(string content, string userID, int threadID, ref  List<ArticleThread> ArticleThreadDatabase)
+        {
+            ArticleThread thisThread = ArticleThreadDatabase.Find(x => x.ThreadNumber == threadID);
+            if (thisThread != null)
+            {
+                try
+                {
+                    Article replyArticle = new Article(content, userID, threadID);
+                    thisThread.addArticle(replyArticle);
+                    return ReplyArticleThradStatus.AddSucess;
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "文章內容不符規定(長度需為21~499)")
+                        return ReplyArticleThradStatus.ContentFail;
+                    else
+                        return ReplyArticleThradStatus.OtherFail;
+                }
+            }
+            else
+                return ReplyArticleThradStatus.NoThread;
+        }
+
+        public ArticleThread getArticleThreadByNumber(int number, ref List<ArticleThread> ArticleThreadDatabase)
+        {
+            return ArticleThreadDatabase.Find(x => x.ThreadNumber == number);
         }
     }
 }

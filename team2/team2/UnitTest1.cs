@@ -190,11 +190,6 @@ namespace team2
             AccountDataBase.Add(testAccount3);
         }
 
-        void setArticleThreads()
-        {
-
-        }
-
         [TestMethod]
         public void LoginLogoutTest()
         {
@@ -208,7 +203,7 @@ namespace team2
             // Act1
             LoginStatus result1 = ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
             LoginStatus result2 = ServerClient.Login(loginAccount, errorPassword, ref AccountDataBase);
-            LoginStatus result3 = ServerClient.Login(loginAccount, loginPassword, ref AccountDataBase);     
+            LoginStatus result3 = ServerClient.Login(loginAccount, loginPassword, ref AccountDataBase);
             //Assert1
             Assert.AreEqual(AccountStatus.Login, ServerClient.curStatus);
             Assert.AreEqual(result1, LoginStatus.LoginFail);
@@ -273,9 +268,11 @@ namespace team2
             List<Article> testList = new List<Article>();
             testList.Add(testArticle);
 
-            try{
+            try
+            {
                 ArticleThread TestTitleTooShort = new ArticleThread("t", testArticle, 1);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Assert.AreEqual("標題不符合規定", ex.Message);
             }
@@ -284,16 +281,16 @@ namespace team2
             Assert.AreEqual("test", TestThread.Title);  //test the title
             Assert.IsTrue(Enumerable.SequenceEqual(testList, TestThread.Thread));   //test the article list
             Assert.AreEqual(1, TestThread.ThreadNumber);    //test the thread number
-            
+
         }
 
         [TestMethod]
         public void title_verify()
         {
             ArticleThread artic = new ArticleThread();
-            
+
             //欄位字數不可大於10字，不可小於2字
-            Assert.AreEqual(true,　artic.titleVerify("hello"));
+            Assert.AreEqual(true, artic.titleVerify("hello"));
             Assert.AreEqual(true, artic.titleVerify("he"));
             Assert.AreEqual(true, artic.titleVerify("hello*")); //含有特殊字元  
             Assert.AreEqual(true, artic.titleVerify("hello中文哦")); //含有特殊字元  
@@ -302,64 +299,87 @@ namespace team2
             Assert.AreEqual(false, artic.titleVerify("12345678910測試"));
         }
 
-         [TestMethod]
-        public void TestArticleByOnlineForum()
+        [TestMethod]
+        public void ReplyArticleThread()
         {
-             //Arrange
-             OnlineForum OF = new OnlineForum();
-             setAccounts();
-             OF.Login("TestAccount1", "12345678", ref AccountDataBase);
+            Assert.AreEqual(1, 1);
+            Article testArticle = new Article("It is article test!123456", "testAuthor", 1);
+            List<Article> testList = new List<Article>();
+            testList.Add(testArticle);
+            ArticleThread TestTitleTooShort = new ArticleThread();
 
-             string testArticleTitle = "Article";
-             string testArticleContent = "這是一個測試的文章，裡面必須含有至少21個字元。\n<br>並且能儲存換行字元，無論是程式或網頁";
-             string titleTooShort = "";
-             string titleTooLong = "這是一個好長好長好長好長好長好長好長的標題";
-             string contentTooShort = "很短的文章";
-             //Act
-             AddNewArticleThreadStatus result1 = OF.AddArticleThread(titleTooShort, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
-             AddNewArticleThreadStatus result2 = OF.AddArticleThread(titleTooLong, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
-             AddNewArticleThreadStatus result3 = OF.AddArticleThread(testArticleTitle, contentTooShort, OF.curUser.UserID, ref ArticleThreadDataBase);
-             AddNewArticleThreadStatus result4 = OF.AddArticleThread(testArticleTitle, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
-             //Arrest
-             Assert.AreEqual(AddNewArticleThreadStatus.TitleFail, result1);
-             Assert.AreEqual(AddNewArticleThreadStatus.TitleFail, result2);
-             Assert.AreEqual(AddNewArticleThreadStatus.ContentFail,result3);
-             Assert.AreEqual(AddNewArticleThreadStatus.AddSuccess,result4);
-         }
-           [TestMethod]
-            public void ReplyArticleThread()
-            {
-                Assert.AreEqual(1, 1);
-                Article testArticle = new Article("It is article test!123456", "testAuthor", 1);
-                List<Article> testList = new List<Article>();
-                testList.Add(testArticle);
-                ArticleThread TestTitleTooShort = new ArticleThread();
-            
-                //回復文章
-                //正常case
-                Assert.AreEqual(true,TestTitleTooShort.AddComment(1,"awesome"));
-                Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "hello"));
-                Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "word"));
-                Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "wonderful project"));
-           
-                //未輸入就回文
-                Assert.AreEqual(false, TestTitleTooShort.AddComment(1, ""));
+            //回復文章
+            //正常case
+            Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "awesome"));
+            Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "hello"));
+            Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "word"));
+            Assert.AreEqual(true, TestTitleTooShort.AddComment(1, "wonderful project"));
 
-                //輸入過長的回文 (最多50)
-                Assert.AreEqual(false, TestTitleTooShort.AddComment(1, "asdasdasdasdasdasdasfdsfjrijfirwjfijrkfrifjeijfiejfiejfiejfiejamsndkde"));
+            //未輸入就回文
+            Assert.AreEqual(false, TestTitleTooShort.AddComment(1, ""));
 
-                //查看回文
+            //輸入過長的回文 (最多50)
+            Assert.AreEqual(false, TestTitleTooShort.AddComment(1, "asdasdasdasdasdasdasfdsfjrijfirwjfijrkfrifjeijfiejfiejfiejfiejamsndkde"));
 
-                //正常case
-                Assert.AreEqual ("awesome",TestTitleTooShort.GetComment(1)[0]);
-                Assert.AreEqual("hello", TestTitleTooShort.GetComment(1)[1]);
-                Assert.AreEqual("word", TestTitleTooShort.GetComment(1)[2]);
-                Assert.AreEqual("wonderful project", TestTitleTooShort.GetComment(1)[3]);
+            //查看回文
+
+            //正常case
+            Assert.AreEqual("awesome", TestTitleTooShort.GetComment(1)[0]);
+            Assert.AreEqual("hello", TestTitleTooShort.GetComment(1)[1]);
+            Assert.AreEqual("word", TestTitleTooShort.GetComment(1)[2]);
+            Assert.AreEqual("wonderful project", TestTitleTooShort.GetComment(1)[3]);
 
 
-                //輸入了不存在的title編號
-                Assert.AreEqual(null, TestTitleTooShort.GetComment(2));
-                Assert.AreEqual(null, TestTitleTooShort.GetComment(0));
+            //輸入了不存在的title編號
+            Assert.AreEqual(null, TestTitleTooShort.GetComment(2));
+            Assert.AreEqual(null, TestTitleTooShort.GetComment(0));
+        }
+        [TestMethod]
+        public void TestArticleByOnlineForum() //整合測試
+        {
+            //Arrange1 //新增文章測試
+            OnlineForum OF = new OnlineForum();
+            setAccounts();
+            OF.Login("TestAccount1", "12345678", ref AccountDataBase);
+
+            string testArticleTitle = "測試標題1";
+            string testArticleContent = "這是一個測試的文章，裡面必須含有至少21個字元。\n<br>並且能儲存換行字元，無論是程式或網頁";
+            string titleTooShort = "";
+            string titleTooLong = "這是一個好長好長好長好長好長好長好長的標題";
+            string contentTooShort = "很短的文章";
+            //Act1
+            AddNewArticleThreadStatus result1 = OF.AddArticleThread(titleTooShort, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
+            AddNewArticleThreadStatus result2 = OF.AddArticleThread(titleTooLong, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
+            AddNewArticleThreadStatus result3 = OF.AddArticleThread(testArticleTitle, contentTooShort, OF.curUser.UserID, ref ArticleThreadDataBase);
+            AddNewArticleThreadStatus result4 = OF.AddArticleThread(testArticleTitle, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
+            //Arrest1
+            Assert.AreEqual(AddNewArticleThreadStatus.TitleFail, result1);
+            Assert.AreEqual(AddNewArticleThreadStatus.TitleFail, result2);
+            Assert.AreEqual(AddNewArticleThreadStatus.ContentFail, result3);
+            Assert.AreEqual(AddNewArticleThreadStatus.AddSuccess, result4);
+
+            //Arrange2 文章搜尋測試
+            OF.AddArticleThread("測試標題2", "測試文章內容：1234567891011121314151617181920", OF.curUser.UserID, ref ArticleThreadDataBase);
+            OF.AddArticleThread("測試標題3", "測試文章內容：1234567891011121314151617181920", OF.curUser.UserID, ref ArticleThreadDataBase);
+            OF.AddArticleThread("測試標題4", "測試文章內容：1234567891011121314151617181920", OF.curUser.UserID, ref ArticleThreadDataBase);
+            OF.AddArticleThread("測試標題5", "測試文章內容：1234567891011121314151617181920", OF.curUser.UserID, ref ArticleThreadDataBase);
+            //Act2
+            ArticleThread getArticleThread1 = OF.getArticleThreadByNumber(1, ref ArticleThreadDataBase);
+            ArticleThread getArticleThread2 = OF.getArticleThreadByNumber(4, ref ArticleThreadDataBase);
+            ArticleThread getArticleThread3 = OF.getArticleThreadByNumber(6, ref ArticleThreadDataBase);
+            //Assert2
+            Assert.AreEqual("測試標題1", getArticleThread1.Title);
+            Assert.AreEqual("測試標題4", getArticleThread2.Title);
+            Assert.AreEqual(null, getArticleThread3);
+
+            //Act3 回覆文章測試
+            ReplyArticleThradStatus result5 = OF.ReplyArticleThread(testArticleContent, OF.curUser.UserID, 6, ref ArticleThreadDataBase);
+            ReplyArticleThradStatus result6 = OF.ReplyArticleThread(contentTooShort, OF.curUser.UserID, 1, ref ArticleThreadDataBase);
+            ReplyArticleThradStatus result7 = OF.ReplyArticleThread(testArticleContent, OF.curUser.UserID, 1, ref ArticleThreadDataBase);
+            //Assert3
+            Assert.AreEqual(ReplyArticleThradStatus.NoThread, result5);
+            Assert.AreEqual(ReplyArticleThradStatus.ContentFail, result6);
+            Assert.AreEqual(ReplyArticleThradStatus.AddSucess, result7);
         }
     }
 }
