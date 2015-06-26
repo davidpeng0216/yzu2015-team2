@@ -16,6 +16,9 @@ namespace team2
         private List<Article> thread;
         private int threadNumber;
         //private bool isTitleVerify;
+        //用來紀錄回文
+        public Dictionary<int, List<string>> articleComments = new Dictionary<int, List<string>>();
+
 
         public ArticleThread() {}
 
@@ -121,5 +124,35 @@ namespace team2
             else
                 return true;
         }
+
+
+        public bool  AddComment(int titleNum, string comment)
+        {
+            if (comment.Length > 50)
+                return false;
+            else if (comment.Length <= 0)
+                return false;
+
+
+            if (!articleComments.ContainsKey(titleNum))
+            {
+                articleComments.Add(titleNum, new List<string>());
+            }
+            articleComments[titleNum].Add(comment);
+
+            return true;
+        }
+
+        public List<string> GetComment(int titleNum)
+        {
+            if (articleComments.ContainsKey(titleNum))
+            {
+                return articleComments[titleNum];
+            }
+            return null;
+        }
+
+
+       
     }
 }
