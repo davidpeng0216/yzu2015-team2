@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace team2
 {
-    enum RegisterValue {AccountFormatFail, PasswordFormatFail, PasswordSame, EmailFormatFail, AccountExist, EmailExist, CAPTCHAFail, RegisterSuccess };
+    enum RegisterStatus {AccountFormatFail, PasswordFormatFail, PasswordNotSame, EmailFormatFail, AccountExist, EmailExist, CAPTCHAFail, RegisterSuccess };
 
     class Register
     {
@@ -37,24 +37,21 @@ namespace team2
         {
             if (Regex.IsMatch(email, "^[a-zA-Z0-9_]+@[a-zA-Z0-9._]+$"))
                 return true;
-            else 
-                return false;
+            else return false;
         }
 
         static internal bool CheckAccountExist(string accountToCheck, List<Account> AccountList)
         {
             if (AccountList.Exists(x => x.UserID == accountToCheck))
                 return true;
-            else
-                return false;
+            else return false;
         }
 
         static internal bool CheckEmailExist(string EmailToCheck, List<Account> AccountList)
         {
             if (AccountList.Exists(x => x.Email == EmailToCheck))
                 return true;
-            else
-                return false;
+            else return false;
         }
 
         static internal string getCAPTCHA()
@@ -75,29 +72,29 @@ namespace team2
             return result;
         }
 
-        static internal RegisterValue RegisterAccount(string acc, string pwd1, string pwd2, string email, string genCode, string inputCode, ref List<Account> AccountList)
+        static internal RegisterStatus RegisterAccount(string account, string password1, string password2, string email, string genCode, string inputCode, ref List<Account> AccountList)
         {
-            if (!VerifyAccount(acc))
-                return RegisterValue.AccountFormatFail;
-            else if (CheckAccountExist(acc, AccountList))
-                return RegisterValue.AccountExist;
-            else if (!VerifyPassword(pwd1))
-                return RegisterValue.PasswordFormatFail;
-            else if (!VerifyPasswordSame(pwd1, pwd2))
-                return RegisterValue.PasswordSame;
+            if (!VerifyAccount(account))
+                return RegisterStatus.AccountFormatFail;
+            else if (CheckAccountExist(account, AccountList))
+                return RegisterStatus.AccountExist;
+            else if (!VerifyPassword(password1))
+                return RegisterStatus.PasswordFormatFail;
+            else if (!VerifyPasswordSame(password1, password2))
+                return RegisterStatus.PasswordNotSame;
             else if (!VerifyEmail(email))
-                return RegisterValue.EmailFormatFail;
+                return RegisterStatus.EmailFormatFail;
             else if (CheckEmailExist(email, AccountList))
-                return RegisterValue.EmailExist;
+                return RegisterStatus.EmailExist;
             else if (!genCode.Equals(inputCode))
-                return RegisterValue.CAPTCHAFail;
+                return RegisterStatus.CAPTCHAFail;
             else
             {
-                Account newAccount = new Account(acc, pwd1, email);
+                Account newAccount = new Account(account, password1, email);
                 AccountList.Add(newAccount);
-                return RegisterValue.RegisterSuccess;
+                return RegisterStatus.RegisterSuccess;
             }
-          
         }
+
     }
 }

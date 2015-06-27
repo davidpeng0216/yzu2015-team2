@@ -10,18 +10,18 @@ namespace team2
     enum AccountStatus {Logout, Login};
     enum LoginStatus {LoginSuccess, LoginFail, RejectLogin};
     enum AddNewArticleThreadStatus {AddSuccess, TitleFail, ContentFail, OtherFail};
-    enum ReplyArticleThradStatus {AddSucess, NoThread, ContentFail, OtherFail};
+    enum ReplyArticleThreadStatus {AddSucess, NoThread, ContentFail, OtherFail};
 
     class OnlineForum
     {
-        internal AccountStatus curStatus;
-        internal Account curUser;
+        internal AccountStatus currentStatus;
+        internal Account currentUser;
         private int LoginTryCount;
 
         public OnlineForum()
         {
-            curStatus = AccountStatus.Logout;
-            curUser = null;
+            currentStatus = AccountStatus.Logout;
+            currentUser = null;
             LoginTryCount = 0;
         }
 
@@ -33,8 +33,8 @@ namespace team2
             if (AccountList.Exists(x => x.UserID == userid && x.Password == password))
             {
                 LoginTryCount = 0;
-                curUser = AccountList.Find(x => x.UserID == userid && x.Password == password);
-                curStatus = AccountStatus.Login;
+                currentUser = AccountList.Find(x => x.UserID == userid && x.Password == password);
+                currentStatus = AccountStatus.Login;
                 return LoginStatus.LoginSuccess;
             }
             else
@@ -46,8 +46,8 @@ namespace team2
 
         public void Logout()
         {
-            curUser = null;
-            curStatus = AccountStatus.Logout;
+            currentUser = null;
+            currentStatus = AccountStatus.Logout;
         }
 
         public AddNewArticleThreadStatus AddArticleThread(string title, string content, string userID, ref List<ArticleThread> ArticleThreadDatabase)
@@ -71,7 +71,7 @@ namespace team2
             }
         }
 
-        public ReplyArticleThradStatus ReplyArticleThread(string content, string userID, int threadID, ref  List<ArticleThread> ArticleThreadDatabase)
+        public ReplyArticleThreadStatus ReplyArticleThread(string content, string userID, int threadID, ref  List<ArticleThread> ArticleThreadDatabase)
         {
             ArticleThread thisThread = ArticleThreadDatabase.Find(x => x.ThreadNumber == threadID);
             if (thisThread != null)
@@ -80,18 +80,18 @@ namespace team2
                 {
                     Article replyArticle = new Article(content, userID, threadID);
                     thisThread.addArticle(replyArticle);
-                    return ReplyArticleThradStatus.AddSucess;
+                    return ReplyArticleThreadStatus.AddSucess;
                 }
                 catch (Exception ex)
                 {
                     if (ex.Message == "文章內容不符規定(長度需為21~499)")
-                        return ReplyArticleThradStatus.ContentFail;
+                        return ReplyArticleThreadStatus.ContentFail;
                     else
-                        return ReplyArticleThradStatus.OtherFail;
+                        return ReplyArticleThreadStatus.OtherFail;
                 }
             }
             else
-                return ReplyArticleThradStatus.NoThread;
+                return ReplyArticleThreadStatus.NoThread;
         }
 
         public ArticleThread getArticleThreadByNumber(int number, ref List<ArticleThread> ArticleThreadDatabase)

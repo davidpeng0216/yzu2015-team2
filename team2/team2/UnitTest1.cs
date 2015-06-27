@@ -22,11 +22,11 @@ namespace team2
             string Email = "Test@email.com";
             string Code = Register.getCAPTCHA();
             //Act
-            RegisterValue Result1 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
-            RegisterValue Result2 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
+            RegisterStatus Result1 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
+            RegisterStatus Result2 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
             //Assert
-            Assert.AreEqual(Result1, RegisterValue.RegisterSuccess);
-            Assert.AreEqual(Result2, RegisterValue.AccountExist);
+            Assert.AreEqual(Result1, RegisterStatus.RegisterSuccess);
+            Assert.AreEqual(Result2, RegisterStatus.AccountExist);
         }
 
         [TestMethod]
@@ -39,21 +39,21 @@ namespace team2
             string Email = "Test@email.com";
             string Code = Register.getCAPTCHA();
             //Act
-            RegisterValue Result1 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
-            RegisterValue Result2 = Register.RegisterAccount(OtherUserID, Password, Password, Email, Code, Code, ref AccountDataBase);
+            RegisterStatus Result1 = Register.RegisterAccount(UserID, Password, Password, Email, Code, Code, ref AccountDataBase);
+            RegisterStatus Result2 = Register.RegisterAccount(OtherUserID, Password, Password, Email, Code, Code, ref AccountDataBase);
             //Assert
-            Assert.AreEqual(Result1, RegisterValue.RegisterSuccess);
-            Assert.AreEqual(Result2, RegisterValue.EmailExist);
+            Assert.AreEqual(Result1, RegisterStatus.RegisterSuccess);
+            Assert.AreEqual(Result2, RegisterStatus.EmailExist);
         }
 
         [TestMethod]
         public void testAccountFormat()
         {
-            //test account's format
-
             //正常Case
             Assert.IsTrue(Register.VerifyAccount("abcde123"));
             Assert.IsTrue(Register.VerifyAccount("abcdeFGH"));
+
+            //以下為不正常case 用Assert.IsFalase來驗證
             //過長
             Assert.IsFalse(Register.VerifyAccount("abcdefghASijk123dkfasfdjasjdkaslkdasld456789"));
             //過短
@@ -70,12 +70,12 @@ namespace team2
         [TestMethod]
         public void testPasswordFormat()
         {
-            //test password's format
-
             //正常密碼Case
             Assert.IsTrue(Register.VerifyPassword("123456789"));
             Assert.IsTrue(Register.VerifyPassword("abc12345"));
             Assert.IsTrue(Register.VerifyPassword("125abcde"));
+
+            //以下為不正常case 用Assert.IsFalase來驗證
             //過長
             Assert.IsFalse(Register.VerifyPassword("abcdefghASijk123dkfasfdjasjdkaslkdasld456789"));
             //過短
@@ -103,8 +103,6 @@ namespace team2
          [TestMethod]
         public void Test_EmailFormat()
         {
-            //test Email's format
-
             //正常case
             Assert.IsTrue(Register.VerifyEmail("test1@gmail.com"));
             Assert.IsTrue(Register.VerifyEmail("test_1@gmail.com"));
@@ -115,12 +113,12 @@ namespace team2
             Assert.IsTrue(Register.VerifyEmail("test_1@web_mail.com"));
             Assert.IsTrue(Register.VerifyEmail("9fbw2313test_1565@yahoo.com.tw"));
 
+            //以下為不正常case 用Assert.IsFalase來驗證
             //包含 英文,數字,_ 以外的字元
             Assert.IsFalse(Register.VerifyEmail("電子信箱@mail.yzu.edu.tw"));
             Assert.IsFalse(Register.VerifyEmail("test1@電子信箱伺服器.com"));
             Assert.IsFalse(Register.VerifyEmail("test_1@web_mail.com.台灣"));
             Assert.IsFalse(Register.VerifyEmail("tes#$#$t_1@web_mail.com.tw"));
-
             //不是電子信箱格式
             Assert.IsFalse(Register.VerifyEmail("test_1^web_mail.com"));
             Assert.IsFalse(Register.VerifyEmail("test_1小老鼠web_mail.com"));
@@ -150,25 +148,25 @@ namespace team2
              string ErrorEmail = "電子信箱@mail.edu.tw";
              string genCode = Register.getCAPTCHA();
              //Act
-             RegisterValue result1 = Register.RegisterAccount(CorrectUserID1, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
-             RegisterValue result2 = Register.RegisterAccount(ErrorUserID, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
-             RegisterValue result3 = Register.RegisterAccount(CorrectUserID1, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
-             RegisterValue result4 = Register.RegisterAccount(CorrectUserID2, ErrorPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
-             RegisterValue result5 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, ErrorPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
-             RegisterValue result6 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, ErrorEmail, genCode, genCode, ref AccountDataBase);
-             RegisterValue result7 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
-             RegisterValue result8 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail2, genCode, "0000", ref AccountDataBase);
-             RegisterValue result9 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail2, genCode, genCode, ref AccountDataBase);
+             RegisterStatus result1 = Register.RegisterAccount(CorrectUserID1, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterStatus result2 = Register.RegisterAccount(ErrorUserID, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterStatus result3 = Register.RegisterAccount(CorrectUserID1, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterStatus result4 = Register.RegisterAccount(CorrectUserID2, ErrorPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterStatus result5 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, ErrorPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterStatus result6 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, ErrorEmail, genCode, genCode, ref AccountDataBase);
+             RegisterStatus result7 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail1, genCode, genCode, ref AccountDataBase);
+             RegisterStatus result8 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail2, genCode, "0000", ref AccountDataBase);
+             RegisterStatus result9 = Register.RegisterAccount(CorrectUserID2, CorrectPassword, CorrectPassword, CorrectEmail2, genCode, genCode, ref AccountDataBase);
              //Assert
-             Assert.AreEqual(result1, RegisterValue.RegisterSuccess);
-             Assert.AreEqual(result2, RegisterValue.AccountFormatFail);
-             Assert.AreEqual(result3, RegisterValue.AccountExist);
-             Assert.AreEqual(result4, RegisterValue.PasswordFormatFail);
-             Assert.AreEqual(result5, RegisterValue.PasswordSame);
-             Assert.AreEqual(result6, RegisterValue.EmailFormatFail);
-             Assert.AreEqual(result7, RegisterValue.EmailExist);
-             Assert.AreEqual(result8, RegisterValue.CAPTCHAFail);
-             Assert.AreEqual(result9, RegisterValue.RegisterSuccess);
+             Assert.AreEqual(result1, RegisterStatus.RegisterSuccess);
+             Assert.AreEqual(result2, RegisterStatus.AccountFormatFail);
+             Assert.AreEqual(result3, RegisterStatus.AccountExist);
+             Assert.AreEqual(result4, RegisterStatus.PasswordFormatFail);
+             Assert.AreEqual(result5, RegisterStatus.PasswordNotSame);
+             Assert.AreEqual(result6, RegisterStatus.EmailFormatFail);
+             Assert.AreEqual(result7, RegisterStatus.EmailExist);
+             Assert.AreEqual(result8, RegisterStatus.CAPTCHAFail);
+             Assert.AreEqual(result9, RegisterStatus.RegisterSuccess);
              Assert.AreEqual(2, AccountDataBase.Count);
          }
 
@@ -205,14 +203,14 @@ namespace team2
             LoginStatus result2 = ServerClient.Login(loginAccount, errorPassword, ref AccountDataBase);
             LoginStatus result3 = ServerClient.Login(loginAccount, loginPassword, ref AccountDataBase);
             //Assert1
-            Assert.AreEqual(AccountStatus.Login, ServerClient.curStatus);
+            Assert.AreEqual(AccountStatus.Login, ServerClient.currentStatus);
             Assert.AreEqual(result1, LoginStatus.LoginFail);
             Assert.AreEqual(result2, LoginStatus.LoginFail);
             Assert.AreEqual(result3, LoginStatus.LoginSuccess);
             //Act2
             ServerClient.Logout();
             //Assert2
-            Assert.AreEqual(AccountStatus.Logout, ServerClient.curStatus);
+            Assert.AreEqual(AccountStatus.Logout, ServerClient.currentStatus);
             //Act3
             ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
             ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
@@ -221,7 +219,7 @@ namespace team2
             ServerClient.Login(notExistAccount, loginPassword, ref AccountDataBase);
             LoginStatus result4 = ServerClient.Login(loginAccount, loginPassword, ref AccountDataBase);
             //Assert3
-            Assert.AreEqual(AccountStatus.Logout, ServerClient.curStatus);
+            Assert.AreEqual(AccountStatus.Logout, ServerClient.currentStatus);
             Assert.AreEqual(result4, LoginStatus.RejectLogin);
         }
 
@@ -257,9 +255,8 @@ namespace team2
             Assert.AreEqual(testContentsAccept, testArticle.Contents);
             Assert.AreEqual(testAuthor, testArticle.Author);
             Assert.AreEqual(1, testArticle.ThreadNumber);
-
-
         }
+
         [TestMethod]
         public void TestArticleThread()
         {
@@ -281,7 +278,6 @@ namespace team2
             Assert.AreEqual("test", TestThread.Title);  //test the title
             Assert.IsTrue(Enumerable.SequenceEqual(testList, TestThread.Thread));   //test the article list
             Assert.AreEqual(1, TestThread.ThreadNumber);    //test the thread number
-
         }
 
         [TestMethod]
@@ -348,10 +344,10 @@ namespace team2
             string titleTooLong = "這是一個好長好長好長好長好長好長好長的標題";
             string contentTooShort = "很短的文章";
             //Act1
-            AddNewArticleThreadStatus result1 = OF.AddArticleThread(titleTooShort, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
-            AddNewArticleThreadStatus result2 = OF.AddArticleThread(titleTooLong, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
-            AddNewArticleThreadStatus result3 = OF.AddArticleThread(testArticleTitle, contentTooShort, OF.curUser.UserID, ref ArticleThreadDataBase);
-            AddNewArticleThreadStatus result4 = OF.AddArticleThread(testArticleTitle, testArticleContent, OF.curUser.UserID, ref ArticleThreadDataBase);
+            AddNewArticleThreadStatus result1 = OF.AddArticleThread(titleTooShort, testArticleContent, OF.currentUser.UserID, ref ArticleThreadDataBase);
+            AddNewArticleThreadStatus result2 = OF.AddArticleThread(titleTooLong, testArticleContent, OF.currentUser.UserID, ref ArticleThreadDataBase);
+            AddNewArticleThreadStatus result3 = OF.AddArticleThread(testArticleTitle, contentTooShort, OF.currentUser.UserID, ref ArticleThreadDataBase);
+            AddNewArticleThreadStatus result4 = OF.AddArticleThread(testArticleTitle, testArticleContent, OF.currentUser.UserID, ref ArticleThreadDataBase);
             //Arrest1
             Assert.AreEqual(AddNewArticleThreadStatus.TitleFail, result1);
             Assert.AreEqual(AddNewArticleThreadStatus.TitleFail, result2);
@@ -359,10 +355,10 @@ namespace team2
             Assert.AreEqual(AddNewArticleThreadStatus.AddSuccess, result4);
 
             //Arrange2 文章搜尋測試
-            OF.AddArticleThread("測試標題2", "測試文章內容：1234567891011121314151617181920", OF.curUser.UserID, ref ArticleThreadDataBase);
-            OF.AddArticleThread("測試標題3", "測試文章內容：1234567891011121314151617181920", OF.curUser.UserID, ref ArticleThreadDataBase);
-            OF.AddArticleThread("測試標題4", "測試文章內容：1234567891011121314151617181920", OF.curUser.UserID, ref ArticleThreadDataBase);
-            OF.AddArticleThread("測試標題5", "測試文章內容：1234567891011121314151617181920", OF.curUser.UserID, ref ArticleThreadDataBase);
+            OF.AddArticleThread("測試標題2", "測試文章內容：1234567891011121314151617181920", OF.currentUser.UserID, ref ArticleThreadDataBase);
+            OF.AddArticleThread("測試標題3", "測試文章內容：1234567891011121314151617181920", OF.currentUser.UserID, ref ArticleThreadDataBase);
+            OF.AddArticleThread("測試標題4", "測試文章內容：1234567891011121314151617181920", OF.currentUser.UserID, ref ArticleThreadDataBase);
+            OF.AddArticleThread("測試標題5", "測試文章內容：1234567891011121314151617181920", OF.currentUser.UserID, ref ArticleThreadDataBase);
             //Act2
             ArticleThread getArticleThread1 = OF.getArticleThreadByNumber(1, ref ArticleThreadDataBase);
             ArticleThread getArticleThread2 = OF.getArticleThreadByNumber(4, ref ArticleThreadDataBase);
@@ -373,13 +369,13 @@ namespace team2
             Assert.AreEqual(null, getArticleThread3);
 
             //Act3 回覆文章測試
-            ReplyArticleThradStatus result5 = OF.ReplyArticleThread(testArticleContent, OF.curUser.UserID, 6, ref ArticleThreadDataBase);
-            ReplyArticleThradStatus result6 = OF.ReplyArticleThread(contentTooShort, OF.curUser.UserID, 1, ref ArticleThreadDataBase);
-            ReplyArticleThradStatus result7 = OF.ReplyArticleThread(testArticleContent, OF.curUser.UserID, 1, ref ArticleThreadDataBase);
+            ReplyArticleThreadStatus result5 = OF.ReplyArticleThread(testArticleContent, OF.currentUser.UserID, 6, ref ArticleThreadDataBase);
+            ReplyArticleThreadStatus result6 = OF.ReplyArticleThread(contentTooShort, OF.currentUser.UserID, 1, ref ArticleThreadDataBase);
+            ReplyArticleThreadStatus result7 = OF.ReplyArticleThread(testArticleContent, OF.currentUser.UserID, 1, ref ArticleThreadDataBase);
             //Assert3
-            Assert.AreEqual(ReplyArticleThradStatus.NoThread, result5);
-            Assert.AreEqual(ReplyArticleThradStatus.ContentFail, result6);
-            Assert.AreEqual(ReplyArticleThradStatus.AddSucess, result7);
+            Assert.AreEqual(ReplyArticleThreadStatus.NoThread, result5);
+            Assert.AreEqual(ReplyArticleThreadStatus.ContentFail, result6);
+            Assert.AreEqual(ReplyArticleThreadStatus.AddSucess, result7);
         }
     }
 }

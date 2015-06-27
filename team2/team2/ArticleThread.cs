@@ -24,7 +24,7 @@ namespace team2
 
         public ArticleThread(String _title, Article _article, int _threadNumber)
         {
-            if (titleVerify(_title) == true)
+            if (titleVerify(_title))
                 title = _title;
             else
                 throw new ArgumentException("標題不符合規定");
